@@ -31,7 +31,7 @@ public class Hellocontroller {
 	
 	@GetMapping("/hello")
 	@ResponseBody
-	public String index(HttpServletRequest request, HttpServletResponse response) {
+	public List<EventProductVO> index(HttpServletRequest request, HttpServletResponse response) {
 		
 		httpSession = request.getSession();
 		httpSession.setAttribute("name", "kiuk");
@@ -50,9 +50,9 @@ public class Hellocontroller {
 		for(int i=1; i<6; i++) {
 			list.add(String.valueOf(i));
 		}
-		eventProductService.findAllById(list).forEach(product -> System.out.println(product.getName()));
+		List<EventProductVO> products = eventProductService.findAllById(list);
 		
-		return "okay";
+		return products;
 	}
 	
 	@GetMapping("/login")

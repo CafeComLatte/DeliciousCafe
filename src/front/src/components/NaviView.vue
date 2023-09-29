@@ -41,10 +41,19 @@ export default {
 #nav > #nav_wrap #logo_img {
 	width : 35px;	
 }
+#nav > #nav_wrap ul {
+	display : inline;
+}
+
 
 #nav > #nav_wrap li {	
 	display:inline-block;
 	padding:35px 15px;
+}
+
+a {
+	color : black;
+	text-decoration-line: none;
 }
 
 #nav > #nav_wrap #login {

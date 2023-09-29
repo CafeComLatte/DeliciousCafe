@@ -1,6 +1,6 @@
 <template>
   <div id="main">
-	
+	<slot/>
   </div>
 </template>
 
@@ -13,10 +13,6 @@ export default {
 </script>
 <style>
 #main {
-	float : left;
-	height : 400px;
-	width : 963px;
-	background-color: blue;
 	
 }
 </style>
