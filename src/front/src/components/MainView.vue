@@ -13,6 +13,7 @@ export default {
 </script>
 <style>
 #main {
-	
+	height : 600px;
+	width : 1263px;
 }
 </style>

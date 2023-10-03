@@ -8,6 +8,7 @@
 
 				<p class="eventproduct_price">{{ product.price }}</p>
 			</li>
+			
 		</ul>
 	</div>
 </template>
@@ -20,9 +21,13 @@ const getImg = (img) =>{
 	return require(`../assets/img/${img}`);
 };
 
+
 </script>
 
 <style>
+#eventproduct_wrap{
+	height : 460px;
+}
 #eventproduct_wrap>ul {
 	display: flex;
 	justify-content: center;
@@ -30,9 +35,10 @@ const getImg = (img) =>{
 	list-style: none;
 }
 
-#eventproduct_wrap>h1 {
-	margin-left: 5px;
-	margin-bottom: 15px;
+#eventproduct_wrap > h1 {
+	display:block;
+	margin-left: 20px;
+	margin-bottom: 5px;
 }
 
 #eventproduct_wrap>ul>li {

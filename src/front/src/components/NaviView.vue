@@ -1,24 +1,28 @@
 <template>
   <div id="nav">
 	<div id="nav_wrap">
-		<a id="logo" href="#"><img id="logo_img" src="../assets/img/cafe_logo.png"/></a>		
+		<router-link id="logo" to="/site"><img id="logo_img" src="../assets/img/cafe_logo.png"/></router-link>		
 		<ul>
-			<li><a href="#">메인</a></li>
+			<li><router-link to="/site">메인</router-link></li>
 			<li><a href="#">사용자 정보</a></li>
 			<li><a href="#">상품 검색</a></li>
 			<li><a href="#">결제 내역</a></li>
 		</ul>
-		<a id="login" href="#"><img id="login_img" src="../assets/img/login.png"/></a>				
+		<a id="login" href="#"><img id="login_img" v-bind:src="getImg(img)"/></a>				
 	</div>
   </div>
 </template>
 
-<script>
-
-export default {
-	name: 'NaviView'
+<script setup>
+	import {useStore} from 'vuex'
+	const store = useStore();
+	const img = store.getters.getUser === '200'?'person_uncheck.png':'login.png';
 	
-}
+	const getImg = (img) =>{	
+		return require(`../assets/img/${img}`);
+	};
+	
+
 </script>
 <style>
 #nav {	

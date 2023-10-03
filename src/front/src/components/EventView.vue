@@ -1,20 +1,26 @@
 <template>
 	<div id="event_wrap">
-		<img v-bind:src="getImg(test)"/>			
+		<img v-if="store.getters.getEvent.image" v-bind:src="getImg(store.getters.getEvent.image)" />				
 	</div>
 </template>
 <script setup>
-const test = "event1.png";
+import {useStore} from 'vuex'
+
+const store = useStore();
+
 const getImg = (img) =>{
 	return require(`../assets/img/${img}`);
 };
+
+
+
 </script>
 <style>
 #event_wrap {
-	margin-top: 5px;
-	margin-bottom : 25px;
+	height : 140px;
+	width : 700px;
 	padding : 5px;
-	text-align: center;
+	margin : 5px auto 25px auto;
 }
 
 #event_wrap > img {

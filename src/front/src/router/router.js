@@ -3,8 +3,9 @@ import {createRouter, createWebHistory} from 'vue-router'
 
 const routes = [
 	
-	{path: "/hello", name : "MainPageView", component:()=> import('@/components/MainPageView.vue')},
-	{path: "/test", name : "TestWorld", component:()=> import('@/components/TestWorld.vue')}
+	{path: "/site", name : "MainPageView", component:()=> import('@/components/MainPageView.vue')},
+	{path: "/site/login", name : "LoginView", component:()=> import('@/components/LoginView.vue')},
+	
 ]
 
 const router = createRouter({

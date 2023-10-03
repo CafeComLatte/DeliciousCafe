@@ -1,32 +1,32 @@
 <template>
-	<HeaderView/>
-	<NaviView/>
-	<SideView/>
-	<MainView>
+	<template v-if="store.getters.getUser === '200' && path !=='/site/login'" >
+		<HeaderView/>
+		<NaviView/>
+		<MainView>
+			<router-view/>
+		</MainView>
+		<FooterView />
+	</template>
+	<template v-else>
 		<router-view/>
-	</MainView>
+	</template>
 </template>
-
-<script>
+<script setup>
 import HeaderView from './components/HeaderView'
 import NaviView from './components/NaviView'
-import SideView from './components/SideView'
 import MainView from './components/MainView'
-export default {
-  name: 'App',
-  components:{
-	HeaderView, NaviView, SideView, MainView
-  }
-}
+import FooterView from './components/FooterView'
+import {useStore} from 'vuex'
+
+const store = useStore();
+
+const path = window.location.pathname;
+
+
+
 </script>
-
 <style>
-
-
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  color: #2c3e50;
-  
+  font-family: Avenir, Helvetica, Arial, sans-serif;  
 }
-
 </style>
