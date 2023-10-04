@@ -20,6 +20,7 @@
     "vue-sessionstorage": "^1.0.0",
     "vue3-cookies": "^1.0.6",
     "vue3-storage": "^0.1.11",
+    "vuetify": "^3.3.20",
     "vuex": "^4.1.0"
   },
   "devDependencies": {
