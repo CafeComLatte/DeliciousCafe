@@ -10,19 +10,13 @@
 					<li>개인정보 처리방침</li>
 					<li><span>연락처 : 010-5555-5555</span></li>
 				</ul>
-				
 			</div>
 		</div>
-		
-		
 	</div>
 </template>
-<script>
-export default{
-	name:"FooterView"
-}
+<script setup>
 </script>
-<style>
+<style scoped>
 #footer {
 	background-color: black;
 	width:1263px;

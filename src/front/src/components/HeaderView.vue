@@ -4,16 +4,12 @@
   </div>
 </template>
 
-<script>
+<script setup>
 
-export default {
-	name: 'HeaderView'
-	
-}
 </script>
-<style>
+<style scoped>
 #header {
-	height : 300px;
+	height :300px;
 	width:1263px;
 	background-image:url('../assets/img/cafe.jpg');
 	

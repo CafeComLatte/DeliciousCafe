@@ -14,6 +14,7 @@
     "core-js": "^3.8.3",
     "session": "^0.1.0",
     "universal-cookie": "^6.1.1",
+    "vee-validate": "^4.11.8",
     "vue": "^3.3.4",
     "vue-router": "^4.2.5",
     "vue-session": "^1.0.0",

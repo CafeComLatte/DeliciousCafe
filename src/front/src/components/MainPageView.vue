@@ -1,15 +1,16 @@
 <template>
-  <div id="MainPageView">
-	<div class="content_wrap">
-		<EventView/>
-		<EventProductsView/>		
+	<div id="mainpage">
+		<div id="mainpage_wrap">
+			<EventView/>
+			<EventProductsView/>		
+		</div>
 	</div>
-  </div>
 </template>
 
 <script setup>
 import EventProductsView from '@/components/EventProductsView'
 import EventView from '@/components/EventView'
+
 import {onMounted} from 'vue'
 import {useStore} from 'vuex'
 
@@ -21,16 +22,15 @@ onMounted(async()=>{
 })
 
 </script>
-<style>
+<style scoped>
 
-#MainPageView {
-	float : left;
+#mainpage {
 	height : 600px;
 	width:1263px;
 	background-color: #f9f9f9f9;
 }
 
-.content_wrap {
+#mainpage > #mainpage_wrap {
 	height : 600px;
 	margin : 0 auto;
 	width: 1000px;

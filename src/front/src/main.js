@@ -12,9 +12,12 @@ const vuetify = createVuetify({
   directives,
 });
 
-
-createApp(App)
+const app = createApp(App)
 .use(vuetify)
 .use(store)
 .use(router)
-.mount('#app')
+
+app.config.globalProperties.$store = store;
+app.config.globalProperties.$router = router;
+
+app.mount('#app')

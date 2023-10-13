@@ -3,17 +3,18 @@ import axios from '@/axios/index.js'
 
 export default createStore({
 	state : {
-		user : null,
+		result : false,
 		data : null,
 		event_data : {}
 	},
 	getters: {
 		getEvent: state => state.event_data,
-		getUser: state => state.user
+		getResult: state => state.result
 	},
 	mutations : {
-		setUser(state, response){
-			state.user = response;
+		setResult(state, response){
+			console.log(response);
+			state.result = response;
 		},
 		getData(state, datas){
 			datas.map((value)=>{
@@ -28,10 +29,17 @@ export default createStore({
 		}
 	},
 	actions :{
-		async login({commit}){			
-			await axios.post('/api/login',{id:'test',password:'test'}).then((response) =>{
-				
-				commit('setUser',response.data.status)
+		
+		async signUp({commit}, data){			
+			await axios.post('/api/signUp',data).then((response) =>{
+				console.log('data1 : ' + response.data);
+				if(response.data.result === true){
+					localStorage.setItem('id',data.id);
+					localStorage.setItem('name',data.name);
+					console.log("login success id :" + localStorage.getItem('id') + ', name : ' + localStorage.getItem('name'));
+					
+					commit('setResult',true);
+				}
 			});
 	
 		},

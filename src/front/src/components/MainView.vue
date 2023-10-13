@@ -1,19 +1,22 @@
 <template>
-  <div id="main">
-	<slot/>
-  </div>
+	<div id="main">
+		<HeaderView/>
+		<NaviView/>
+		<MainPageView/>
+		<FooterView/>
+	</div>
 </template>
 
-<script>
+<script setup>
+import HeaderView from './HeaderView.vue'
+import NaviView from './NaviView'
+import MainPageView from './MainPageView'
+import FooterView from './FooterView'
 
-export default {
-	name: 'MainView'
-	
-}
 </script>
-<style>
+<style scoped>
 #main {
-	height : 600px;
+	height : 1300px;
 	width : 1263px;
 }
 </style>

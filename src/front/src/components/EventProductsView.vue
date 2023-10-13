@@ -24,7 +24,7 @@ const getImg = (img) =>{
 
 </script>
 
-<style>
+<style scoped>
 #eventproduct_wrap{
 	height : 460px;
 }
