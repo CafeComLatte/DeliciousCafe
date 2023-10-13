@@ -3,7 +3,6 @@ import axios from '@/axios/index.js'
 
 export default createStore({
 	state : {
-		result : false,
 		data : null,
 		event_data : {}
 	},
@@ -12,10 +11,7 @@ export default createStore({
 		getResult: state => state.result
 	},
 	mutations : {
-		setResult(state, response){
-			console.log(response);
-			state.result = response;
-		},
+		
 		getData(state, datas){
 			datas.map((value)=>{
 				value.image = value.image.split('/').pop();
@@ -29,34 +25,29 @@ export default createStore({
 		}
 	},
 	actions :{
-		
-		async signUp({commit}, data){			
-			await axios.post('/api/signUp',data).then((response) =>{
-				console.log('data1 : ' + response.data);
-				if(response.data.result === true){
-					localStorage.setItem('id',data.id);
-					localStorage.setItem('name',data.name);
-					console.log("login success id :" + localStorage.getItem('id') + ', name : ' + localStorage.getItem('name'));
-					
-					commit('setResult',true);
-				}
+		async logout({commit}){			
+			await axios.get('/api/logout').then(response =>{
+				console.log('logout api result : ' + response.data);
+				
 			});
-	
 		},
-		async getEventProduct({commit}){
-			
-		await axios.get('/api/hello').then(response =>{
-			commit('getData',response.data.data);
-		});
-	
+		async login({commit}, data){			
+			return await axios.post('/api/login',data);
+		},		
+		async signUp({commit}, data){			
+			return await axios.post('/api/signUp',data);
+		},
+		async getEventProduct({commit}){			
+			await axios.get('/api/hello').then(response =>{
+				commit('getData',response.data.data);
+			});
 		},
 		async getEvent({commit}){
-			
-		await axios.get('/api/getEvent').then(response =>{
-			commit('getEventData',response.data.data);
-		});
-	
+			await axios.get('/api/getEvent').then(response =>{
+				commit('getEventData',response.data.data);
+			});
 		}
+		
 		
 	}
 });

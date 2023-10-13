@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -45,9 +46,30 @@ public class UsersController {
 	
 	@PostMapping("/login")
 	@ResponseBody
-	public HashMap<String, Object> login(HttpServletRequest request,@RequestBody UsersVO userVO) {
+	public HashMap<String, Object> login(HttpServletRequest request,@RequestBody UsersVO usersVO) {				
+		System.out.println("Try login : " + usersVO.toString());
+		
+		HttpSession httpSession = request.getSession();
+		
+		boolean isSuccess = false;
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		isSuccess = usersService.countByIdAndPassword(usersVO.getId(),usersVO.getPassword()) == 1?true:false; 
+		
+		map.put("result", isSuccess);
+		
+	    return map;
+	}
+	
+	@GetMapping("/logout")
+	@ResponseBody
+	public HashMap<String, Object> logout(HttpServletRequest request) {
 				
 		HashMap<String, Object> map = new HashMap<String, Object>();
+		
+		HttpSession httpSession = request.getSession();
+		httpSession.invalidate();
+		map.put("result", "true");
 		
 	    return map;
 	}

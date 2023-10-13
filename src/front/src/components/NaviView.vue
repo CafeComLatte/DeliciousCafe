@@ -3,25 +3,36 @@
 	<div id="nav_wrap">
 		<router-link id="logo" to="/site"><img id="logo_img" src="../assets/img/cafe_logo.png"/></router-link>		
 		<ul>
-			<li><router-link to="/site">메인</router-link></li>
+			<li><router-link to="/site">메인3</router-link></li>
 			<li><a href="#">사용자 정보</a></li>
 			<li><a href="#">상품 검색</a></li>
 			<li><a href="#">결제 내역</a></li>
 		</ul>
-		<a id="login" href="#"><img id="login_img" v-bind:src="getImg(img)"/></a>				
+		<router-link v-if="idCheck === null" id="login" to="/login">
+			<img id="login_img" v-bind:src="getImg('login.png')"/>				
+		</router-link>	
+		<router-link v-else id="login" @click="logout" to="/login">
+			<img id="login_img" v-bind:src="getImg('logout.png')"/>
+		</router-link>
 	</div>
   </div>
 </template>
 
 <script setup>
-	import {useStore} from 'vuex'
-	const store = useStore();
-	const img = store.getters.getUser === '200'?'person_uncheck.png':'login.png';
-	
+	import {getCurrentInstance} from 'vue'
+
+	const {proxy} = getCurrentInstance();
+
+	const idCheck = localStorage.getItem('id');
+
 	const getImg = (img) =>{	
 		return require(`../assets/img/${img}`);
 	};
 	
+	const logout = async () => {
+		await proxy.$store.dispatch('logout');
+		localStorage.clear();
+	};
 
 </script>
 <style scoped>

@@ -15,11 +15,18 @@ public class CustomInterceptor implements HandlerInterceptor{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		// TODO Auto-generated method stub
-		//HttpSession httpSession = request.getSession();
+		HttpSession httpSession = request.getSession();
+		String id = (String)httpSession.getAttribute("id");
+		
+		boolean sCheck = false;
+		
+		if(id != null) {
+			sCheck = true;
+		}
 		
 		System.out.println(request.getRequestURI());
-		if(request.getRequestURI().startsWith("/site")) {
-			//response.sendRedirect("/login");
+		if(request.getRequestURI().startsWith("/site") && !sCheck) {
+			response.sendRedirect("/login");
 		}else if (request.getRequestURI().startsWith("/api")) {
 			//response.setStatus(403);
 		}else {

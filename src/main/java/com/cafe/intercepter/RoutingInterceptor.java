@@ -44,7 +44,8 @@ public class RoutingInterceptor implements WebMvcConfigurer{
 	public void addInterceptors(InterceptorRegistry registry) {
 		// TODO Auto-generated method stub
 		registry.addInterceptor(new CustomInterceptor()).addPathPatterns("/*/**").excludePathPatterns("/login").excludePathPatterns("/api/login")
-		.excludePathPatterns("/signUp").excludePathPatterns("/api/signUp");
+		.excludePathPatterns("/signUp").excludePathPatterns("/api/signUp")
+		.excludePathPatterns("/logout").excludePathPatterns("/api/logout");
 	}
 
 	

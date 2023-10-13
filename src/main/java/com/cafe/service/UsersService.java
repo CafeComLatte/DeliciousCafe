@@ -17,5 +17,8 @@ public class UsersService {
 		return usersRepository.signUp(id, password, name, email, phone);		
 	}
 	
+	public int countByIdAndPassword(String id, String password) {
+		return usersRepository.countByIdAndPassword(id, password);
+	}
 	
 }

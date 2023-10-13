@@ -12,4 +12,5 @@ public interface UsersRepository extends JpaRepository<UsersVO, Integer>{
 	@Procedure("SIGNUP")
 	int signUp(@Param("id") String id,@Param("password") String password,@Param("name") String name,@Param("email") String email,@Param("phone") String phone );
 
+	int countByIdAndPassword(String id, String password);
 }
