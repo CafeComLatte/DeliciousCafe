@@ -4,6 +4,24 @@
 <script setup>
 
 </script>
-<style>
+<style scoped>
+:global(*) {
+	box-sizing: border-box;
+	margin : 0;
+	padding : 0;	
+	font-family: "Nanum HaNaSonGeurSsi";
+	list-style: none;
+}
 
+:global(.left){
+	float : left;
+}
+
+:global(.right){
+	float : right;
+}
+
+:global(.f-40){
+	font-size: 40px;
+}
 </style>

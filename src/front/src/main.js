@@ -19,5 +19,5 @@ const app = createApp(App)
 
 app.config.globalProperties.$store = store;
 app.config.globalProperties.$router = router;
-
+app.config.globalProperties.$test = 'test';
 app.mount('#app')

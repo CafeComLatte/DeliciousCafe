@@ -1,49 +1,60 @@
 <template>
   <div id="nav">
 	<div id="nav_wrap">
-		<router-link id="logo" to="/site"><img id="logo_img" src="../assets/img/cafe_logo.png"/></router-link>		
+		<router-link id="logo" to="/site/main"><img id="logo_img" :src="getImg('cafe_logo.png')"/></router-link>		
 		<ul>
-			<li><router-link to="/site">메인3</router-link></li>
+			<li><router-link to="/site/main">메인</router-link></li>
 			<li><a href="#">사용자 정보</a></li>
 			<li><a href="#">상품 검색</a></li>
 			<li><a href="#">결제 내역</a></li>
 		</ul>
-		<router-link v-if="idCheck === null" id="login" to="/login">
-			<img id="login_img" v-bind:src="getImg('login.png')"/>				
-		</router-link>	
-		<router-link v-else id="login" @click="logout" to="/login">
-			<img id="login_img" v-bind:src="getImg('logout.png')"/>
-		</router-link>
+		<div v-if="id === null" id="login">
+			<router-link to="/login">
+				<img id="login_img" v-bind:src="getImg('login.png')"/>	
+			</router-link>
+		</div>	
+		<div v-else id="login">
+			<router-link class="flex" to="/site/user">
+				<img id="user_img" v-bind:src="getImg('person_uncheck.png')"/>
+				<span>{{id}}</span>  	
+			</router-link>
+			<router-link to="/login" @click="logout">
+				<img id="login_img" v-bind:src="getImg('logout.png')"/>	
+			</router-link>
+		</div>
 	</div>
   </div>
 </template>
 
 <script setup>
-	import {getCurrentInstance} from 'vue'
+	import {ref, getCurrentInstance} from 'vue'
+
+	const v = ref(7);
 
 	const {proxy} = getCurrentInstance();
 
-	const idCheck = localStorage.getItem('id');
-
-	const getImg = (img) =>{	
-		return require(`../assets/img/${img}`);
-	};
+	const id = localStorage.getItem('id');
 	
 	const logout = async () => {
 		await proxy.$store.dispatch('logout');
 		localStorage.clear();
 	};
 
+	const getImg = (img) =>{
+	return require(`../assets/img/${img}`);
+};
+	
 </script>
 <style scoped>
 #nav {	
-	height : 100px;
+	height : 85px;
 	width:1263px;
 	padding : 0 10px 0 10px;
 	
+	border-bottom: 1px solid silver;
 }
 #nav > #nav_wrap{
-	height : 100px;
+	height : 85px;
 	text-align: center;
 }
 
@@ -53,9 +64,6 @@
 	padding:30px 0;
 }
 
-#nav > #nav_wrap #logo_img {
-	width : 35px;	
-}
 #nav > #nav_wrap ul {
 	display : inline;
 }
@@ -72,12 +80,26 @@ a {
 }
 
 #nav > #nav_wrap #login {
+	display : flex;
+	justify-content: center;
 	float:right;
 	padding:30px 0;
 }
 
-#nav > #nav_wrap #login_img {
-	width : 35px;	
+#nav > #nav_wrap #login > a {
+	padding:0 10px;	
+	align-content: center;
+}
+
+#nav > #nav_wrap #login > .flex {
+	display:flex;
+	
+}
+
+
+#login_img,#user_img,#logo_img {
+	width : 25px;
+	height : 25px;	
 }
 
 

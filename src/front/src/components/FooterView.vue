@@ -15,19 +15,21 @@
 	</div>
 </template>
 <script setup>
+import {ref} from 'vue'
+const v = ref(1);
 </script>
 <style scoped>
 #footer {
 	background-color: black;
 	width:1263px;
-	height:200px;
+	height:220px;
 	text-align: center;
 }
 
 #footer > #footer_wrap{
 	margin : 0 auto;
 	width:800px;
-	height:200px;
+	height:220px;
 	padding-top: 50px;
 	color: white;
 }

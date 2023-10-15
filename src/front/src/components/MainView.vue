@@ -2,7 +2,7 @@
 	<div id="main">
 		<HeaderView/>
 		<NaviView/>
-		<MainPageView/>
+		<router-view/>
 		<FooterView/>
 	</div>
 </template>
@@ -10,13 +10,14 @@
 <script setup>
 import HeaderView from './HeaderView.vue'
 import NaviView from './NaviView'
-import MainPageView from './MainPageView'
 import FooterView from './FooterView'
+import {ref} from 'vue'
+const v = ref(1);
 
 </script>
-<style scoped>
+<style>
 #main {
-	height : 1300px;
+	height : 1200px;
 	width : 1263px;
 }
 </style>

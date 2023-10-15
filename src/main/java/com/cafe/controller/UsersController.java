@@ -1,6 +1,7 @@
 package com.cafe.controller;
 
 import java.util.HashMap;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -56,6 +57,10 @@ public class UsersController {
 		
 		isSuccess = usersService.countByIdAndPassword(usersVO.getId(),usersVO.getPassword()) == 1?true:false; 
 		
+		if(isSuccess) {
+			httpSession.setAttribute("id", usersVO.getId());
+		}
+		
 		map.put("result", isSuccess);
 		
 	    return map;
@@ -63,8 +68,7 @@ public class UsersController {
 	
 	@GetMapping("/logout")
 	@ResponseBody
-	public HashMap<String, Object> logout(HttpServletRequest request) {
-				
+	public HashMap<String, Object> logout(HttpServletRequest request) {		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		
 		HttpSession httpSession = request.getSession();
@@ -72,5 +76,26 @@ public class UsersController {
 		map.put("result", "true");
 		
 	    return map;
+	}
+	
+	@GetMapping("/user")
+	@ResponseBody
+	public HashMap<String, Object> user(HttpServletRequest request) {
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		boolean isSuccess = false;
+		
+		HttpSession httpSession = request.getSession();
+		String id = (String)httpSession.getAttribute("id");
+
+		Optional<UsersVO> usersVO = usersService.findById(id);
+		
+		if(usersVO.isPresent()) {
+			isSuccess = true;
+			map.put("data", usersVO.get());
+		}
+		
+		map.put("result", isSuccess);
+		
+		return map;
 	}
 }

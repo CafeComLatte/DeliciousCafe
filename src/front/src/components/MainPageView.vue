@@ -22,7 +22,7 @@ onMounted(async()=>{
 })
 
 </script>
-<style scoped>
+<style>
 
 #mainpage {
 	height : 600px;
@@ -32,6 +32,7 @@ onMounted(async()=>{
 
 #mainpage > #mainpage_wrap {
 	height : 600px;
+	padding-top: 50px;
 	margin : 0 auto;
 	width: 1000px;
 }

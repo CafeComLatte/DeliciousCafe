@@ -25,6 +25,12 @@ export default createStore({
 		}
 	},
 	actions :{
+		async user({commit}){			
+			return await axios.get('/api/user');
+		},
+		async userSetting({commit}){			
+			return await axios.get('/api/userSetting');
+		},
 		async logout({commit}){			
 			await axios.get('/api/logout').then(response =>{
 				console.log('logout api result : ' + response.data);

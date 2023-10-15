@@ -26,6 +26,7 @@ public class CustomInterceptor implements HandlerInterceptor{
 		
 		System.out.println(request.getRequestURI());
 		if(request.getRequestURI().startsWith("/site") && !sCheck) {
+			System.out.println("로그인 안된상태");
 			response.sendRedirect("/login");
 		}else if (request.getRequestURI().startsWith("/api")) {
 			//response.setStatus(403);

@@ -20,7 +20,7 @@
 
 	const {proxy} = getCurrentInstance();
 
-	const a = ref(7);
+	const a = ref(8);
 
 	const isValid = ref(false);
 
@@ -39,7 +39,7 @@
 				localStorage.setItem('name', user_data.name);
 
 				console.log("login success id :" + localStorage.getItem('id') + ', name : ' + localStorage.getItem('name'));
-				router.push('/site');
+				router.push('/site/main');
 			}else{
 				loginForm.value.reset();	
 			}
@@ -53,25 +53,27 @@
 <style scoped>
 #login {
 	width: 1263px;
-	background-color: #f7f7f7;
+	height: 600px;
 }
 
 #login > #login_wrap {
+	padding-top: 30px;
 	margin-left: auto;
 	margin-right: auto;
-	height: 290px;
+	height: 250px;
 	width: 600px;
 }
 
 #login > #login_image_wrap{
+	padding-top: 20px;
 	margin-left: auto;
 	margin-right: auto;
-	height: 300px;
+	height: 350px;
 	width: 600px;
 }
 
 #login > #login_image_wrap > #login_image {
-	height: 300px;
+	height: 350px;
 	width: 600px;
 }
 

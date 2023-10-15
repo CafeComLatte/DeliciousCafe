@@ -2,7 +2,7 @@
 	<div id="signUp">
 		<div class="signUp_wrap">
 
-			<h1> 회원가입 페이지 {{ a }} </h1>
+			<h1> 회원가입 </h1>
 
 			<v-form ref="signUpForm" validate-on="input" v-model="isValid">
 				<v-responsive>
@@ -31,7 +31,7 @@ import router from '../router/router'
 
 const { proxy } = getCurrentInstance();
 
-const a = ref(56);
+const a = ref(57);
 const check_password = ref('')
 
 const isPasswordValid = ref(false);
@@ -58,7 +58,7 @@ const signUp = async (user_data) => {
 			localStorage.setItem('id', user_data.id);
 
 			console.log("signup success id :" + localStorage.getItem('id') + ', name : ' + localStorage.getItem('name'));
-			router.push('/site');
+			router.push('/site/main');
 		}else{
 			signUpForm.value.reset();	
 		}
@@ -80,6 +80,6 @@ const validPassword = () => {
 <style>
 #signUp {
 	margin: 0 auto;
-	height: 1300px;
+	height: 600px;
 	width: 700px;
 }</style>
