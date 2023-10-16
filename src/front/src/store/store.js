@@ -4,7 +4,7 @@ import axios from '@/axios/index.js'
 export default createStore({
 	state : {
 		data : null,
-		event_data : {}
+		event_data : {image:''}
 	},
 	getters: {
 		getEvent: state => state.event_data,

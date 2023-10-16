@@ -27,12 +27,11 @@ onMounted(async()=>{
 #mainpage {
 	height : 600px;
 	width:1263px;
-	background-color: #f9f9f9f9;
 }
 
 #mainpage > #mainpage_wrap {
 	height : 600px;
-	padding-top: 50px;
+	padding-top: 30px;
 	margin : 0 auto;
 	width: 1000px;
 }
