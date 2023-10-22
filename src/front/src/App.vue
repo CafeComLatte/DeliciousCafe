@@ -11,6 +11,9 @@
 	padding : 0;	
 	font-family: "Nanum HaNaSonGeurSsi";
 	list-style: none;
+	text-overflow:ellipsis;
+	overflow:hidden;
+	white-space: nowrap;
 }
 
 :global(.left){

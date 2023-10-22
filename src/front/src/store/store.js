@@ -52,8 +52,10 @@ export default createStore({
 			await axios.get('/api/getEvent').then(response =>{
 				commit('getEventData',response.data.data);
 			});
-		}
-		
+		},
+		async getProducts({commit},params){			
+			return await axios.get('/api/products',params);
+		},
 		
 	}
 });

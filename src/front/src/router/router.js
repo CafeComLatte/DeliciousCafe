@@ -1,5 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
+import {ref} from 'vue'
 
+const v = ref(1);
 
 const routes = [
 	
@@ -12,13 +14,15 @@ const routes = [
 			{
 				path : 'user',
 				component:()=> import('@/components/UserView.vue')
-			}
+			},
+			{
+				path : 'products',
+				component:()=> import('@/components/ProductListView.vue')
+			},
 		]
 	},
 	{path: "/login", name : "LoginView", component:()=> import('@/components/LoginView.vue')},
-	{path: "/signUp", name : "SignUpView", component:()=> import('@/components/SignUpView.vue')},
-	{path: "/site/user", name : "UserView", component:()=> import('@/components/UserView.vue')}
-	
+	{path: "/signUp", name : "SignUpView", component:()=> import('@/components/SignUpView.vue')}
 ]
 
 const router = createRouter({

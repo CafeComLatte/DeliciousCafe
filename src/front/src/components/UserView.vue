@@ -18,7 +18,6 @@
 #userPage {
 	height : 600px;
 	width:1263px;
-	background-color: #f9f9f9f9;
 }
 
 #userPage > #userPage_wrap {
