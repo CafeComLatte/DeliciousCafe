@@ -4,9 +4,9 @@
 		<router-link id="logo" to="/site/main"><img id="logo_img" :src="getImg('cafe_logo.png')"/></router-link>		
 		<ul>
 			<li><router-link to="/site/main">메인</router-link></li>
-			<li><a href="#">사용자 정보</a></li>
-			<li><a href="#">상품 검색</a></li>
-			<li><a href="#">결제 내역</a></li>
+			<li><router-link to="/site/user">사용자 정보</router-link></li>
+			<li><router-link to="/site/products">상품 검색</router-link></li>
+			<li><router-link to="/site/payments">결제 내역</router-link></li>
 		</ul>
 		<div v-if="id === null" id="login">
 			<router-link to="/login">
@@ -29,7 +29,7 @@
 <script setup>
 	import {ref, getCurrentInstance} from 'vue'
 
-	const v = ref(7);
+	const v = ref(10);
 
 	const {proxy} = getCurrentInstance();
 

@@ -1,13 +1,7 @@
 <template>
 	<div id="product_list">
 		<div id="product_list_wrap">
-			<div id="search">
-				<div id="search_wrap">
-					<button class="search_button"><img :src="getFormat('search_product.png','image')" /></button>
-					<input type="text" placeholder="상품 검색" />
-					<button class="cancel_button"><img :src="getFormat('cancel.png','image')" /></button>
-				</div>
-			</div>
+			<SearchView searchPlaceholder="상품 검색"/>
 			<div id="product">
 				<table>
 					<tbody>
@@ -19,29 +13,23 @@
 								<p>{{ getFormat(item.sys_date,'date') }}</p>
 							</div>
 							<span>{{getFormat(item.price,'price')}}</span>
-							
 						</tr>
 					</tbody>
 				</table>
 			</div>
-			<div class="page">
-				<a @click="changePage(currentPage - 1)">&lt;</a>
-				<a v-for="(paging, index) in totalPages" :key="index">{{ paging }}</a>
-				<a @click="changePage(currentPage + 1)">&gt;</a>
-			</div>
-			<div>
-
-			</div>
+			<PageView :totalPages="totalPages" :currentPage="currentPage" :onChangePage="changePage"/>
 		</div>
 	</div>
 </template>
 <script setup>
+import SearchView from '@/components/SearchView'
+import PageView from '@/components/PageView'
 import { ref, onMounted, getCurrentInstance } from 'vue'
 
 const { proxy } = getCurrentInstance();
 
 
-const v = ref(47);
+const v = ref(50);
 const itemList = ref([]);
 const totalPages = ref(0);
 const currentPage = ref(0);
@@ -101,43 +89,6 @@ const getFormat = (data,type) => {
 	width: 1000px;
 }
 
-#product_list>#product_list_wrap>#search{
-	width: 1000px;
-	height: 60px;	
-}
-
-
-#product_list>#product_list_wrap>#search>#search_wrap {
-	display: flex;
-	justify-content: space-between;
-	border: 1px solid black;
-	border-radius: 20px;
-	
-}
-
-#product_list>#product_list_wrap>#search>#search_wrap>* {
-	display: inline-flex;
-	align-items: center;
-}
-
-#product_list>#product_list_wrap>#search>#search_wrap>input {
-	width: 900px;
-	outline: none;
-}
-
-#product_list>#product_list_wrap>#search>#search_wrap>button {
-	padding: 10px;
-}
-
-#product_list>#product_list_wrap>#search>#search_wrap>.cancel_button {
-	visibility: hidden;
-}
-
-#product_list>#product_list_wrap>#search>#search_wrap>button>img {
-	width: 25px;
-	height: 25px;
-}
-
 #product_list>#product_list_wrap>#product {
 	width: 1000px;
 	height: 450px;
@@ -175,15 +126,4 @@ const getFormat = (data,type) => {
 	border-bottom: 1px silver solid;
 }
 
-
-
-#product_list>#product_list_wrap>.page {
-	margin: 10px 0;
-	text-align: center;
-}
-
-#product_list>#product_list_wrap>.page>a {
-	margin: 0 5px;
-	cursor: pointer;
-}
 </style>

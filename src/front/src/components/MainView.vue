@@ -19,6 +19,7 @@ const v = ref(3);
 #main {
 	height : 1200px;
 	width : 1263px;
+	margin: 0 auto;
 }
 
 #main > .main_side{
