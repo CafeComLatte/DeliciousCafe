@@ -31,4 +31,8 @@ app.config.globalProperties.$getDateFormat = (date) => {
 	date = String(date);
 	return date.replace(/(\d{4})(\d{2})(\d{2})/g,'$1/$2/$3');
 };
+app.config.globalProperties.$getTimeFormat = (time) => {
+	time = String(time);
+	return time.replace(/(\d{2})(\d{2})/g,'$1:$2');
+};
 app.mount('#app')

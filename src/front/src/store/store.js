@@ -54,8 +54,11 @@ export default createStore({
 			});
 		},
 		async getProducts({commit},params){			
-			return await axios.get('/api/products',params);
+			return await axios.post('/api/products',params);
 		},
+		async getPayments({commit},params){			
+			return await axios.post('/api/payments',params);
+		}
 		
 	}
 });

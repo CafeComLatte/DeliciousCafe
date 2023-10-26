@@ -23,16 +23,16 @@
 								</div>
 							</td>
 							<td>
-								<span>날짜</span>	
+								<span>{{getFormat(item.payment_date,'date')}} {{getFormat(item.payment_time,'time')}}</span>	
 							</td>
 							<td>
-								<span>개당 금액</span>
+								<span>{{getFormat(item.price,'price')}}</span>
 							</td>
 							<td>
-								<span>수량</span>
+								<span>{{item.count}}</span>
 							</td>
 							<td>
-								<span>총 금액</span>
+								<span>{{getFormat(item.total_price,'price')}}</span>
 							</td>
 						</tr>
 					</tbody>
@@ -46,7 +46,7 @@
 import PageView from '@/components/PageView'
 import { ref, onMounted, getCurrentInstance } from 'vue'
 
-const v = ref(17);
+const v = ref(18);
 
 const { proxy } = getCurrentInstance();
 const itemList = ref([]);
@@ -60,7 +60,7 @@ const params = ref({ params: { page: 0, size: 3 } });
 
 onMounted(async () => {
 	await searchPage(params.value.params.page).then(res => {
-
+		console.log(res.data.elements);
 		itemList.value.push(...res.data.elements);
 		totalPages.value = res.data.totalPages;
 		currentPage.value = res.data.currentPage;
@@ -70,13 +70,13 @@ onMounted(async () => {
 const searchPage = (page) => {
 	params.value.params.page = page;
 	console.log(params.value);
-	return proxy.$store.dispatch('getProducts', params.value);
+	return proxy.$store.dispatch('getPayments', params.value);
 };
 
 const changePage = async (page) => {
 	if (page >= 0 && page < totalPages.value) {
 		await searchPage(page).then(res => {
-			console.log(res.data);
+			
 			itemList.value = [];
 			itemList.value.push(...res.data.elements);
 			totalPages.value = res.data.totalPages;
@@ -92,6 +92,8 @@ const getFormat = (data,type) => {
 		return proxy.$getPriceFormat(data);
 	}else if( type === 'date'){
 		return proxy.$getDateFormat(data);
+	}else if( type === 'time'){
+		return proxy.$getTimeFormat(data);
 	}else{
 		return;
 	}
@@ -123,7 +125,7 @@ const getFormat = (data,type) => {
 #payment_list>#payment_list_wrap>#payment>table>tbody>tr>td:nth-child(n+3){width:150px;}
 
 #payment_list>#payment_list_wrap>#payment>table>tbody>tr:nth-child(1) {
-	width: 998px;
+	width: 1000px;
 	height: 60px;
 	display:flex;
 	justify-content: space-between;
@@ -133,7 +135,7 @@ const getFormat = (data,type) => {
 #payment_list>#payment_list_wrap>#payment>table>tbody>tr>th{display:inline-flex; justify-content: center; align-items: center;}
 
 #payment_list>#payment_list_wrap>#payment>table>tbody>tr:nth-child(n+2) {
-	width: 998px;
+	width: 1000px;
 	height: 150px;
 	display:flex;
 	justify-content: space-between;

@@ -29,7 +29,7 @@
 <script setup>
 	import {ref, getCurrentInstance} from 'vue'
 
-	const v = ref(10);
+	const v = ref(14);
 
 	const {proxy} = getCurrentInstance();
 

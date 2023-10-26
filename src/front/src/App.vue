@@ -16,6 +16,18 @@
 	white-space: nowrap;
 }
 
+:global(*::after){
+	box-sizing: border-box;
+	margin : 0;
+	padding : 0;	
+}
+
+:global(*::before){
+	box-sizing: border-box;
+	margin : 0;
+	padding : 0;	
+}
+
 :global(.left){
 	float : left;
 }
