@@ -2,7 +2,8 @@
 	<router-view/>
 </template>
 <script setup>
-
+import {ref} from 'vue'
+const v = ref(3);
 </script>
 <style scoped>
 :global(*) {
@@ -28,6 +29,7 @@
 	padding : 0;	
 }
 
+
 :global(.left){
 	float : left;
 }
@@ -39,4 +41,9 @@
 :global(.f-40){
 	font-size: 40px;
 }
+
+:global(.f-30){
+	font-size: 30px;
+}
+
 </style>

@@ -5,7 +5,7 @@
 			<div id="product">
 				<table>
 					<tbody>
-						<tr v-for="(item, index) in itemList" :key="index">
+						<tr v-for="(item, index) in itemList" :key="index" @click="goDetails(item.id)">
 							<img :src="getFormat(item.image,'image')"/>
 							<div class="product_content">
 								<p class="f-40">{{item.name}}</p>
@@ -25,11 +25,12 @@
 import SearchView from '@/components/SearchView'
 import PageView from '@/components/PageView'
 import { ref, onMounted, getCurrentInstance } from 'vue'
+import {useRouter} from 'vue-router'
 
 const { proxy } = getCurrentInstance();
+const router = useRouter();
 
-
-const v = ref(50);
+const v = ref(8);
 const itemList = ref([]);
 const totalPages = ref(0);
 const currentPage = ref(0);
@@ -37,8 +38,8 @@ const params = ref({ params: { page: 0, size: 3 } });
 
 onMounted(async () => {
 	await searchPage(params.value.params.page).then(res => {
-
 		itemList.value.push(...res.data.elements);
+		console.log(res.data.totalPages);
 		totalPages.value = res.data.totalPages;
 		currentPage.value = res.data.currentPage;
 	});
@@ -46,20 +47,22 @@ onMounted(async () => {
 
 const searchPage = (page) => {
 	params.value.params.page = page;
-	console.log(params.value);
 	return proxy.$store.dispatch('getProducts', params.value);
 };
 
 const changePage = async (page) => {
 	if (page >= 0 && page < totalPages.value) {
 		await searchPage(page).then(res => {
-			console.log(res.data);
 			itemList.value = [];
 			itemList.value.push(...res.data.elements);
 			totalPages.value = res.data.totalPages;
 			currentPage.value = res.data.currentPage;
 		});
 	}
+};
+
+const goDetails = (id) => {
+	router.push('/site/products/'+id);
 };
 
 const getFormat = (data,type) => {
@@ -77,17 +80,6 @@ const getFormat = (data,type) => {
 
 </script>
 <style>
-#product_list {
-	height: 600px;
-	width: 1263px;
-}
-
-#product_list>#product_list_wrap {
-	height: 600px;
-	padding-top: 30px;
-	margin: 0 auto;
-	width: 1000px;
-}
 
 #product_list>#product_list_wrap>#product {
 	width: 1000px;
@@ -123,7 +115,7 @@ const getFormat = (data,type) => {
 }
 
 #product_list>#product_list_wrap>#product>table>tbody>tr:nth-child(-n+2){
-	border-bottom: 1px silver solid;
+	border-bottom: 1px #e3e5e8 solid;
 }
 
 </style>

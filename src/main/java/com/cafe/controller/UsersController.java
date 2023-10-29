@@ -39,6 +39,7 @@ public class UsersController {
 		
 		if(isSuccess) {
 			httpSession.setAttribute("id", userVO.getId());
+			httpSession.setAttribute("password", userVO.getPassword());
 		}
 		
 		map.put("result", isSuccess);
@@ -59,6 +60,7 @@ public class UsersController {
 		
 		if(isSuccess) {
 			httpSession.setAttribute("id", usersVO.getId());
+			httpSession.setAttribute("password", usersVO.getPassword());
 		}
 		
 		map.put("result", isSuccess);

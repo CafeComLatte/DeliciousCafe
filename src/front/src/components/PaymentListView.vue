@@ -14,11 +14,11 @@
 						<tr v-for="(item, index) in itemList" :key="index">
 							<td>
 								<div class="product_content">
-									<img :src="getFormat(item.image,'image')"/>
+									<img :src="getFormat(item.products[0].image,'image')"/>
 									<div>
-										<p class="f-40">{{item.name}}</p>
-										<p>{{ item.contents }}</p>
-										<p>{{ getFormat(item.sys_date,'date') }}</p>
+										<p class="f-40">{{item.products[0].name}}</p>
+										<p>{{ item.products[0].contents }}</p>
+										<p>{{ getFormat(item.products[0].sys_date,'date') }}</p>
 									</div>
 								</div>
 							</td>
@@ -46,7 +46,7 @@
 import PageView from '@/components/PageView'
 import { ref, onMounted, getCurrentInstance } from 'vue'
 
-const v = ref(18);
+const v = ref(27);
 
 const { proxy } = getCurrentInstance();
 const itemList = ref([]);
@@ -57,11 +57,12 @@ const currentPage = ref(0);
 const params = ref({ params: { page: 0, size: 3 } });
 
 
-
 onMounted(async () => {
 	await searchPage(params.value.params.page).then(res => {
-		console.log(res.data.elements);
+		console.log(res.data);
+			
 		itemList.value.push(...res.data.elements);
+		
 		totalPages.value = res.data.totalPages;
 		currentPage.value = res.data.currentPage;
 	});
@@ -69,14 +70,12 @@ onMounted(async () => {
 
 const searchPage = (page) => {
 	params.value.params.page = page;
-	console.log(params.value);
 	return proxy.$store.dispatch('getPayments', params.value);
 };
 
 const changePage = async (page) => {
 	if (page >= 0 && page < totalPages.value) {
 		await searchPage(page).then(res => {
-			
 			itemList.value = [];
 			itemList.value.push(...res.data.elements);
 			totalPages.value = res.data.totalPages;
@@ -101,22 +100,12 @@ const getFormat = (data,type) => {
 };
 </script>
 <style>
-#payment_list {
-	height: 600px;
-	width: 1263px;
-}
-
-#payment_list>#payment_list_wrap {
-	height: 600px;
-	padding-top: 30px;
-	margin: 0 auto;
-	width: 1000px;
-}
 
 #payment_list>#payment_list_wrap>#payment {
 	width: 1000px;
 	height: 520px;
 }
+
 #payment_list>#payment_list_wrap>#payment>table>tbody>tr>th:nth-child(1) ,
 #payment_list>#payment_list_wrap>#payment>table>tbody>tr>td:nth-child(1) {width:350px;}
 #payment_list>#payment_list_wrap>#payment>table>tbody>tr>th:nth-child(2) ,
@@ -170,7 +159,6 @@ const getFormat = (data,type) => {
 }
 
 #payment_list>#payment_list_wrap>#payment>table>tbody>tr{
-	border-bottom: 1px silver solid;
+	border-bottom: 1px #e3e5e8 solid;
 }
-
 </style>

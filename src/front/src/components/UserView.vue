@@ -15,16 +15,5 @@
 	
 </script>
 <style>
-#userPage {
-	height : 600px;
-	width:1263px;
-}
-
-#userPage > #userPage_wrap {
-	height : 600px;
-	padding: 50px 0;
-	margin : 0 auto;
-	width: 1000px;
-}
 
 </style>

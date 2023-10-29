@@ -1,7 +1,7 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import {ref} from 'vue'
 
-const v = ref(5);
+const v = ref(6);
 
 const routes = [
 	
@@ -17,14 +17,18 @@ const routes = [
 			},
 			{
 				path : 'products',
-				component:()=> import('@/components/ProductListView.vue'),
-				hash: '#product_list'
+				component:()=> import('@/components/ProductListView.vue')
 			},
 			{
 				path : 'payments',
 				component:()=> import('@/components/PaymentListView.vue'),
 				hash: '#payment_list'
 			},
+			{
+				path : 'products/:id',
+				component:()=> import('@/components/ProductDetailsView.vue'),
+				props:true
+			}
 		]
 	},
 	{path: "/login", name : "LoginView", component:()=> import('@/components/LoginView.vue')},

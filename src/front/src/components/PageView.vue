@@ -1,12 +1,14 @@
 <template>
 	<div id="page">
 		<a @click="changePage(currentPage - 1)">&lt;</a>
-		<a v-for="(paging, index) in totalPages" :key="index">{{ paging }}</a>
+		<a v-for="(paging, index) in props.totalPages" :key="index" @click="changePage(paging -1)">{{ paging }}</a>
 		<a @click="changePage(currentPage + 1)">&gt;</a>
 	</div>
 </template>
 <script setup>
-import {defineProps} from 'vue'
+import {defineProps,ref} from 'vue'
+
+const v = ref(2);
 
 const props = defineProps({
 	totalPages : {

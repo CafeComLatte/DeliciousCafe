@@ -1,5 +1,8 @@
 import {createStore} from "vuex"
 import axios from '@/axios/index.js'
+import {ref} from 'vue'
+
+const v = ref(2);
 
 export default createStore({
 	state : {
@@ -53,11 +56,17 @@ export default createStore({
 				commit('getEventData',response.data.data);
 			});
 		},
-		async getProducts({commit},params){			
-			return await axios.post('/api/products',params);
+		async getProducts({commit},params){
+			return await axios.get('/api/products',params);
+		},
+		async getProduct({commit},id){
+			return await axios.get('/api/products/' + id);
 		},
 		async getPayments({commit},params){			
-			return await axios.post('/api/payments',params);
+			return await axios.get('/api/payments',params);
+		},
+		payProduct({commit},params){			
+			return axios.post('/api/payProduct',params);
 		}
 		
 	}

@@ -24,16 +24,4 @@ onMounted(async()=>{
 </script>
 <style>
 
-#mainpage {
-	height : 600px;
-	width:1263px;
-}
-
-#mainpage > #mainpage_wrap {
-	height : 600px;
-	padding-top: 30px;
-	margin : 0 auto;
-	width: 1000px;
-}
-
 </style>

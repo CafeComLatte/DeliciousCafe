@@ -31,4 +31,12 @@ public class PurchasePageDTO {
 				.totalPages(pages.getTotalPages())
 				.currentPage(pages.getNumber()).build();
 	}
+
+	@Override
+	public String toString() {
+		return "PurchasePageDTO [elements=" + elements + ", totalElements=" + totalElements + ", currentPage="
+				+ currentPage + ", totalPages=" + totalPages + "]";
+	}
+	
+	
 }

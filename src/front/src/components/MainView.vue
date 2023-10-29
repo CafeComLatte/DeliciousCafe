@@ -2,7 +2,9 @@
 	<div id="main">
 		<HeaderView/>
 		<NaviView/>
-		<router-view class="main_side"/>
+		<div id="main_side">
+			<router-view class="main_side_wrap"/>	
+		</div>
 		<FooterView/>
 	</div>
 </template>
@@ -22,8 +24,15 @@ const v = ref(3);
 	margin: 0 auto;
 }
 
-#main > .main_side{
+#main > #main_side{
 	height : 600px;
 	width:1263px;
+}
+
+#main_side>.main_side_wrap {
+	height: 600px;
+	padding-top: 20px;
+	margin: 0 auto;
+	width: 1000px;
 }
 </style>

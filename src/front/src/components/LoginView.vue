@@ -54,6 +54,7 @@
 #login {
 	width: 1263px;
 	height: 600px;
+	margin: 0 auto;
 }
 
 #login > #login_wrap {

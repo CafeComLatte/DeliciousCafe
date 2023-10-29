@@ -11,4 +11,5 @@ import com.cafe.entity.PurchaseVO;
 public interface PurchaseRepository extends JpaRepository<PurchaseVO, String>{
 
 	Page<PurchaseVO> findAll(Pageable pageable);
+	
 }

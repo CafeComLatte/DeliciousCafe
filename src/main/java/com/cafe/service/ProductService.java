@@ -1,5 +1,7 @@
 package com.cafe.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,5 +18,9 @@ public class ProductService {
 	
 	public Page<ProductVO> findAll(Pageable pageable){
 		return productRepository.findAll(pageable);
+	}
+	
+	public Optional<ProductVO> findById(String id){
+		return productRepository.findById(id);
 	}
 }
