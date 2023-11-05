@@ -15,11 +15,11 @@
 		</div>	
 		<div v-else id="login">
 			<router-link class="flex" to="/site/user">
-				<img id="user_img" v-bind:src="getImg('person_uncheck.png')"/>
+				<img id="user_img" :src="getImg('person_uncheck.png')"/>
 				<span>{{id}}</span>  	
 			</router-link>
 			<router-link to="/login" @click="logout">
-				<img id="login_img" v-bind:src="getImg('logout.png')"/>	
+				<img id="login_img" :src="getImg('logout.png')"/>	
 			</router-link>
 		</div>
 	</div>
@@ -36,8 +36,11 @@
 	const id = localStorage.getItem('id');
 	
 	const logout = async () => {
-		await proxy.$store.dispatch('logout');
-		localStorage.clear();
+		if (confirm("로그아웃을 하시겠습니까?")) {
+			await proxy.$store.dispatch('logout');
+			localStorage.clear();
+		}	
+		
 	};
 
 	const getImg = (img) =>{

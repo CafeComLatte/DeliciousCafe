@@ -1,48 +1,50 @@
-<template>
-	<router-view/>
+<template>	
+	<router-view />
 </template>
 <script setup>
 import {ref} from 'vue'
-const v = ref(3);
+const v = ref(16);
+
 </script>
 <style scoped>
+
 :global(*) {
 	box-sizing: border-box;
-	margin : 0;
-	padding : 0;	
+	margin: 0;
+	padding: 0;
 	font-family: "Nanum HaNaSonGeurSsi";
 	list-style: none;
-	text-overflow:ellipsis;
-	overflow:hidden;
+	text-overflow: ellipsis;
+	overflow: hidden;
 	white-space: nowrap;
 }
 
-:global(*::after){
+:global(*::after) {
 	box-sizing: border-box;
-	margin : 0;
-	padding : 0;	
+	margin: 0;
+	padding: 0;
 }
 
-:global(*::before){
+:global(*::before) {
 	box-sizing: border-box;
-	margin : 0;
-	padding : 0;	
+	margin: 0;
+	padding: 0;
 }
 
 
-:global(.left){
-	float : left;
+:global(.left) {
+	float: left;
 }
 
-:global(.right){
-	float : right;
+:global(.right) {
+	float: right;
 }
 
-:global(.f-40){
+:global(.f-40) {
 	font-size: 40px;
 }
 
-:global(.f-30){
+:global(.f-30) {
 	font-size: 30px;
 }
 

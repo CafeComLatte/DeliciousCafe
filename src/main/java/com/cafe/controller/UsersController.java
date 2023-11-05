@@ -1,16 +1,20 @@
 package com.cafe.controller;
 
-import java.util.HashMap;
-import java.util.Optional;
+import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.cafe.dto.UserItemDTO;
+import com.cafe.dto.UsersDTO;
+import com.cafe.entity.ErrorCode;
+import com.cafe.entity.ErrorResponse;
 import com.cafe.entity.UsersVO;
 import com.cafe.service.UsersService;
 
@@ -18,86 +22,119 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
 
-@RequestMapping("api")
-@Controller
+@RequestMapping("/api")
+@RestController
 public class UsersController {
 
 	@Autowired
 	UsersService usersService;
 	
+	@GetMapping("/signUp/idCheck")
+	public ErrorResponse duplicateCheck(@RequestParam String id) {
+		ErrorResponse response = ErrorResponse.of(ErrorCode.SERVER_ERROR, "");
+		
+		boolean isSuccess = usersService.countById(id)==1?true:false;
+		
+		if(!isSuccess) {
+			response = ErrorResponse.of(ErrorCode.OK, "ok");
+		}
+		
+		return response;
+	}
+	
 	@PostMapping("/signUp")
-	@ResponseBody
-	public HashMap<String, Object> signUp(@RequestBody UsersVO userVO, HttpServletRequest request){
-		System.out.println("Try Sign up : " + userVO.toString());
+	public ErrorResponse signUp(@RequestBody UsersDTO usersDTO, HttpServletRequest request){
+		ErrorResponse response = ErrorResponse.of(ErrorCode.SERVER_ERROR, "");
+		
+		System.out.println(usersDTO.toString() + " try signup...");
 	
 		HttpSession httpSession = request.getSession();
 		
-		boolean isSuccess = false;
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		isSuccess = usersService.signUp(userVO.getId(),userVO.getPassword(),userVO.getName(),userVO.getEmail(),userVO.getPhone()) == 1?true:false;
+		boolean isSuccess = usersService.signUp(usersDTO.getId(),usersDTO.getPassword(),usersDTO.getName(),usersDTO.getEmail(),usersDTO.getPhone()) == 1?true:false;
 		
 		if(isSuccess) {
-			httpSession.setAttribute("id", userVO.getId());
-			httpSession.setAttribute("password", userVO.getPassword());
+			httpSession.setAttribute("id", usersDTO.getId());
+			httpSession.setAttribute("password", usersDTO.getPassword());
+		
+			response = ErrorResponse.of(ErrorCode.OK, "");
+			
+			System.out.println(usersDTO.getId() +  " signup successful!!");
+		}else {
+			System.out.println(usersDTO.getId() +  " signup failed");
 		}
 		
-		map.put("result", isSuccess);
-		return map;
+		return response;
 	}
 	
 	@PostMapping("/login")
-	@ResponseBody
-	public HashMap<String, Object> login(HttpServletRequest request,@RequestBody UsersVO usersVO) {				
-		System.out.println("Try login : " + usersVO.toString());
+	public ErrorResponse login(HttpServletRequest request,@RequestBody UsersDTO usersDTO){				
+		ErrorResponse response = ErrorResponse.of(ErrorCode.SERVER_ERROR,null);
+		
+		System.out.println(usersDTO.toString() + " try login...");
 		
 		HttpSession httpSession = request.getSession();
 		
-		boolean isSuccess = false;
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		
-		isSuccess = usersService.countByIdAndPassword(usersVO.getId(),usersVO.getPassword()) == 1?true:false; 
+		boolean isSuccess = usersService.countByIdAndPassword(usersDTO.getId(),usersDTO.getPassword()) == 1?true:false; 
 		
 		if(isSuccess) {
-			httpSession.setAttribute("id", usersVO.getId());
-			httpSession.setAttribute("password", usersVO.getPassword());
+			httpSession.setAttribute("id", usersDTO.getId());
+			httpSession.setAttribute("password", usersDTO.getPassword());
+			
+			response = ErrorResponse.of(ErrorCode.OK,"");
+			System.out.println(usersDTO.toString() + " login successful!!");
+		}else {
+			System.out.println(usersDTO.toString() + " login failed");
 		}
-		
-		map.put("result", isSuccess);
-		
-	    return map;
+	    return response;	    
 	}
 	
 	@GetMapping("/logout")
-	@ResponseBody
-	public HashMap<String, Object> logout(HttpServletRequest request) {		
-		HashMap<String, Object> map = new HashMap<String, Object>();
+	public ErrorResponse logout(HttpServletRequest request) {		
+		
+		ErrorResponse response = ErrorResponse.of(ErrorCode.SERVER_ERROR, "");
 		
 		HttpSession httpSession = request.getSession();
 		httpSession.invalidate();
-		map.put("result", "true");
 		
-	    return map;
+		response = ErrorResponse.of(ErrorCode.OK, "");
+		
+	    return response;
 	}
 	
 	@GetMapping("/user")
-	@ResponseBody
-	public HashMap<String, Object> user(HttpServletRequest request) {
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		boolean isSuccess = false;
+	public ErrorResponse user(HttpServletRequest request) {
+		ErrorResponse response = ErrorResponse.of(ErrorCode.SERVER_ERROR, "");
 		
 		HttpSession httpSession = request.getSession();
 		String id = (String)httpSession.getAttribute("id");
 
-		Optional<UsersVO> usersVO = usersService.findById(id);
+		UsersVO usersVO = usersService.findById(id).orElseThrow(NoSuchElementException::new);
 		
-		if(usersVO.isPresent()) {
-			isSuccess = true;
-			map.put("data", usersVO.get());
-		}
+		System.out.println(usersVO.getId() + " user information loading..");
 		
-		map.put("result", isSuccess);
+		response = ErrorResponse.of(ErrorCode.OK, UsersDTO.of(usersVO));
 		
-		return map;
+		return response;
+	}
+	
+	@PatchMapping("/user/updateUserInfo")
+	public ErrorResponse updateUserInfoPhone(HttpServletRequest request, @RequestBody UserItemDTO userItemDTO) {
+		ErrorResponse response = ErrorResponse.of(ErrorCode.SERVER_ERROR, "");
+		HttpSession httpSession = request.getSession();
+		String id = (String)httpSession.getAttribute("id");
+		String item_name = userItemDTO.getName();
+		String item_value = userItemDTO.getValue();
+		
+		System.out.println(id + " user information saving ...");
+		System.out.println("item name : " + item_name);
+		System.out.println("item value : " + item_value);
+		
+		usersService.updateUserInfo(id, item_name, item_value);
+		
+		response = ErrorResponse.of(ErrorCode.OK, "");
+		
+		System.out.println(id + " user information saving Successful!!!");
+		
+		return response;
 	}
 }

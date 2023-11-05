@@ -5,11 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe.entity.EventProductVO;
 import com.cafe.service.EventProductService;
@@ -18,7 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
-@Controller
+@RestController
 @RequestMapping("api")
 public class Hellocontroller {
 
@@ -27,8 +25,13 @@ public class Hellocontroller {
 	
 	private HttpSession httpSession;
 	
+	
+	@GetMapping("/test")
+	public String test(HttpServletRequest request) {
+		return "test";
+	}
+	
 	@GetMapping("/hello")
-	@ResponseBody
 	public Object index(HttpServletRequest request, HttpServletResponse response) {
 		
 		httpSession = request.getSession();

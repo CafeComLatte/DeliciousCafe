@@ -3,6 +3,7 @@
 		<HeaderView/>
 		<NaviView/>
 		<div id="main_side">
+			<LoadingView v-if="loading"/>
 			<router-view class="main_side_wrap"/>	
 		</div>
 		<FooterView/>
@@ -13,9 +14,14 @@
 import HeaderView from './HeaderView.vue'
 import NaviView from './NaviView'
 import FooterView from './FooterView'
-import {ref} from 'vue'
-const v = ref(3);
+import {ref,getCurrentInstance,computed} from 'vue'
+const v = ref(6);
 
+const {proxy} = getCurrentInstance();
+
+const loading = computed(()=>{
+	return proxy.$store.state.loading;	
+});
 </script>
 <style>
 #main {
@@ -25,7 +31,8 @@ const v = ref(3);
 }
 
 #main > #main_side{
-	height : 600px;
+	position: relative;
+	height:600px;
 	width:1263px;
 }
 

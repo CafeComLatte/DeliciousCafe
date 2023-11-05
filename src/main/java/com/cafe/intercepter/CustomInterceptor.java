@@ -1,5 +1,6 @@
 package com.cafe.intercepter;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,12 +27,11 @@ public class CustomInterceptor implements HandlerInterceptor{
 		
 		System.out.println(request.getRequestURI());
 		
-		if(request.getRequestURI().startsWith("/site") && !sCheck) {
+		if((request.getRequestURI().startsWith("/site") || request.getRequestURI().startsWith("/api")) && !sCheck) {
 			System.out.println("로그인 안된상태");
 			response.sendRedirect("/login");
-		}else if (request.getRequestURI().startsWith("/api")) {
-			//response.setStatus(403);
-		}else {
+		}
+		else {
 			
 		}
 		

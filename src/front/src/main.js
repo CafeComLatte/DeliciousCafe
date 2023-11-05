@@ -4,8 +4,16 @@ import router from './router/router'
 import store from './store/store'
 import "vuetify/styles";
 import { createVuetify } from "vuetify";
-import * as components from "vuetify/components";
-import * as directives from "vuetify/directives";
+import * as components from "vuetify/components"
+import * as directives from "vuetify/directives"
+
+import LoadingView from '@/components/utils/LoadingView'
+import AlertDialog from "@/components/dialog/AlertDialog"
+import UserInfoChangeDialog from "@/components/dialog/UserInfoChangeDialog"
+
+import {ref} from 'vue'
+
+const v = ref(6);
 
 const vuetify = createVuetify({
   components,
@@ -13,6 +21,10 @@ const vuetify = createVuetify({
 });
 
 const app = createApp(App)
+.component('LoadingView',LoadingView)
+.component('AlertDialog',AlertDialog)
+.component('UserInfoChangeDialog',UserInfoChangeDialog)
+
 .use(vuetify)
 .use(store)
 .use(router)
@@ -35,4 +47,5 @@ app.config.globalProperties.$getTimeFormat = (time) => {
 	time = String(time);
 	return time.replace(/(\d{2})(\d{2})/g,'$1:$2');
 };
+
 app.mount('#app')

@@ -8,6 +8,7 @@ import jakarta.persistence.StoredProcedureParameter;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @Entity(name = "users")
@@ -25,6 +26,8 @@ import lombok.Getter;
         }
 )
 @AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class UsersVO {
 	
 	public static final String NamedQuery_SIGNUP = "SIGNUP";
@@ -36,11 +39,18 @@ public class UsersVO {
 	private String email;
 	private String phone;
 
-	@Builder
-	public UsersVO() {
-		
+	public void setName(String name) {
+		this.name = name;
 	}
-
+	
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+	
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	
 	@Override
 	public String toString() {
 		return "user information [id=" + id + ", password=" + password + ", name=" + name + ", email=" + email + ", phone="

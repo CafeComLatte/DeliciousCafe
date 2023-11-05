@@ -13,7 +13,7 @@ const routes = [
 			},
 			{
 				path : 'user',
-				component:()=> import('@/components/UserView.vue')
+				component:()=> import('@/components/user/UserView.vue')
 			},
 			{
 				path : 'products',
@@ -31,8 +31,8 @@ const routes = [
 			}
 		]
 	},
-	{path: "/login", name : "LoginView", component:()=> import('@/components/LoginView.vue')},
-	{path: "/signUp", name : "SignUpView", component:()=> import('@/components/SignUpView.vue')}
+	{path: "/login", name : "LoginView", component:()=> import('@/components/login/LoginView.vue')},
+	{path: "/signUp", name : "SignUpView", component:()=> import('@/components/signup/SignUpView.vue')}
 ]
 
 const router = createRouter({
