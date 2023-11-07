@@ -106,6 +106,9 @@ export default createStore({
 		async updateUserInfo({commit},data){
 			return await axios.patch('/api/user/updateUserInfo',data);		
 		},
+		async updateUserSettingInfo({commit},data){
+			return await axios.patch('/api/user/updateUserSettingInfo',data);
+		},
 		async getEventProduct({commit}){			
 			await axios.get('/api/hello').then(response =>{
 				commit('getData',response.data.data);

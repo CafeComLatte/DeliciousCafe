@@ -17,4 +17,12 @@ public class UsersSettingService {
 	public Optional<UsersSettingVO> findById(String id){
 		return usersSettingRepository.findById(id);
 	}
+
+	public void updateUserSettingInfo(String id, String item_name, Boolean item_value) {
+		usersSettingRepository.findById(id).ifPresent(userSetting->{
+			if("phone".equals(item_name))userSetting.setPhone(item_value);
+			if("email".equals(item_name))userSetting.setEmail(item_value);
+			usersSettingRepository.save(userSetting);
+		});
+	}
 }

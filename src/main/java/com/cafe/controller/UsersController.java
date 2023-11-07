@@ -3,6 +3,8 @@ package com.cafe.controller;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cafe.dto.UserItemDTO;
+import com.cafe.dto.ItemDTO;
 import com.cafe.dto.UsersDTO;
 import com.cafe.entity.ErrorCode;
 import com.cafe.entity.ErrorResponse;
@@ -118,12 +120,12 @@ public class UsersController {
 	}
 	
 	@PatchMapping("/user/updateUserInfo")
-	public ErrorResponse updateUserInfoPhone(HttpServletRequest request, @RequestBody UserItemDTO userItemDTO) {
-		ErrorResponse response = ErrorResponse.of(ErrorCode.SERVER_ERROR, "");
+	public ResponseEntity<ErrorResponse> updateUserInfoPhone(HttpServletRequest request, @RequestBody ItemDTO itemDTO) {
+		ResponseEntity<ErrorResponse> response = new ResponseEntity<>(ErrorResponse.of(ErrorCode.SERVER_ERROR, ""),HttpStatus.OK);
 		HttpSession httpSession = request.getSession();
 		String id = (String)httpSession.getAttribute("id");
-		String item_name = userItemDTO.getName();
-		String item_value = userItemDTO.getValue();
+		String item_name = itemDTO.getName();
+		String item_value = (String)itemDTO.getValue();
 		
 		System.out.println(id + " user information saving ...");
 		System.out.println("item name : " + item_name);
@@ -131,7 +133,7 @@ public class UsersController {
 		
 		usersService.updateUserInfo(id, item_name, item_value);
 		
-		response = ErrorResponse.of(ErrorCode.OK, "");
+		response = new ResponseEntity<>(ErrorResponse.of(ErrorCode.NO_CONTENT, ""),HttpStatus.NO_CONTENT);
 		
 		System.out.println(id + " user information saving Successful!!!");
 		

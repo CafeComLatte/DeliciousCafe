@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.cafe.dto.UserItemDTO;
+import com.cafe.dto.ItemDTO;
 import com.cafe.entity.UsersVO;
 import com.cafe.repository.UsersRepository;
 

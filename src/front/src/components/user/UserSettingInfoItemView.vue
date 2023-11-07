@@ -1,20 +1,19 @@
 <template>
 	<li>
 		<div class="left">
-			<img :src="getImg(user_setting_info.image)" />
-			<span>{{user_setting_info.name}}</span>
+			<img :src="getImg(image)" />
+			<span>{{name}}</span>
 		</div>
 		<div class="right">
-			<input v-model="user_setting_info.value" true-value="true" false-value="false" role="switch" type="checkbox" />
+			<input :value="value" v-model="model" role="switch" type="checkbox" />
 		</div>
 	</li>
 </template>
 <script setup>
-import { ref,getCurrentInstance,defineProps,computed } from 'vue'
-const v = ref(2);
+import { ref,getCurrentInstance,defineProps,defineEmits,computed } from 'vue'
+const v = ref(21);
 
 const { proxy } = getCurrentInstance();
-
 const props = defineProps({
 	name : {
 		type: String
@@ -26,10 +25,17 @@ const props = defineProps({
 		type: Boolean
 	}
 });
+const emit = defineEmits(["update:value"]);
 
-const user_setting_info = computed(()=>{
-	return props;
+const model = computed({
+  get() {
+    return props.value;
+  }, 
+  set(value) {
+    emit("update:value", value);
+  }, 
 });
+
 
 const getImg = (img) => {
 	return proxy.$getImgFormat(img);

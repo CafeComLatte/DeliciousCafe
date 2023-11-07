@@ -8,10 +8,13 @@ import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
+@Builder
 @Entity(name="users_setting")
 @AllArgsConstructor
+@NoArgsConstructor
 public class UsersSettingVO {
 	
 	@Id
@@ -23,9 +26,12 @@ public class UsersSettingVO {
 	@Convert(converter = BooleanToYNConverter.class)
 	private boolean email;
 
-	@Builder
-	public UsersSettingVO() {
-		
+	public void setPhone(boolean phone) {
+		this.phone = phone;
+	}
+	
+	public void setEmail(boolean email) {
+		this.email = email;
 	}
 	
 	@Override

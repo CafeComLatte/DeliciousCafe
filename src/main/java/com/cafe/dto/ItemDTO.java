@@ -3,7 +3,7 @@ package com.cafe.dto;
 import lombok.Getter;
 
 @Getter
-public class UserItemDTO {
+public class ItemDTO {
 	private String name;
-	private String value;
+	private Object value;
 }

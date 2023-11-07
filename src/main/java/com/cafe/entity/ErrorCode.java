@@ -5,6 +5,7 @@ import lombok.Getter;
 @Getter
 public enum ErrorCode {
 	OK("","errorNone"),
+	NO_CONTENT("","errorNone"),
 	
 	PARAMETER_ERROR("400","parameter error"),
 	NO_ACCEPTABLE_REPRESENTATION("400","data error"),
