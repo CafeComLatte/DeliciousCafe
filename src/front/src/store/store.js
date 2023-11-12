@@ -2,7 +2,7 @@ import {createStore} from "vuex"
 import axios from '@/axios/index.js'
 import {ref} from 'vue'
 
-const v = ref(18);
+const v = ref(25);
 
 export default createStore({
 	state : {
@@ -17,27 +17,13 @@ export default createStore({
 		user_dialog_alert_info : {
 			item_name : '',
 			item_value : ''
-		},
-		data : null,
-		event_data : {image:''}
+		}
 	},
 	getters: {
-		getEvent: state => state.event_data,
 		getResult: state => state.result,
 		getDialogAlertInfo: state => state.dialog_alert_info
 	},
 	mutations : {
-		getData(state, datas){
-			datas.map((value)=>{
-				value.image = value.image.split('/').pop();
-			});
-			
-			state.data = datas;
-		},
-		getEventData(state, data){
-			data.image = data.image.split('/').pop();
-			state.event_data = data;
-		},
 		openLoading(state){
 			state.loading = true;
 		},
@@ -82,51 +68,47 @@ export default createStore({
 		closeUserInfoChangeDialog({commit}){
 			commit('closeUserInfoChangeDialog');
 		},
-		async user({commit}){			
-			return await axios.get('/api/user');
+		user({commit}){			
+			return axios.get('/api/user');
 		},
-		async userSetting({commit}){			
-			return await axios.get('/api/userSetting');
+		userSetting({commit}){			
+			return axios.get('/api/userSetting');
 		},
-		async logout({commit}){			
-			await axios.get('/api/logout').then(response =>{
+		logout({commit}){			
+			axios.get('/api/logout').then(response =>{
 				console.log('logout api result : ' + response.data);
 				
 			});
 		},
-		async login({commit}, data){			
-			return await axios.post('/api/login',data);
+		login({commit}, data){			
+			return axios.post('/api/login',data);
 		},		
 		signUp({commit}, data){			
 			return axios.post('/api/signUp',data);
 		},
-		async idCheck({commit},data){
-			return await axios.get('/api/signUp/idCheck',data);
+		idCheck({commit},data){
+			return axios.get('/api/signUp/idCheck',data);
 		},
-		async updateUserInfo({commit},data){
-			return await axios.patch('/api/user/updateUserInfo',data);		
+		updateUserInfo({commit},data){
+			return axios.patch('/api/user/updateUserInfo',data);		
 		},
-		async updateUserSettingInfo({commit},data){
-			return await axios.patch('/api/user/updateUserSettingInfo',data);
+		updateUserSettingInfo({commit},data){
+			return axios.patch('/api/user/updateUserSettingInfo',data);
 		},
-		async getEventProduct({commit}){			
-			await axios.get('/api/hello').then(response =>{
-				commit('getData',response.data.data);
-			});
+		getEventProduct({commit}){			
+			return axios.get('/api/getEventProduct');
 		},
-		async getEvent({commit}){
-			await axios.get('/api/getEvent').then(response =>{
-				commit('getEventData',response.data.data);
-			});
+		getEvent({commit}){
+			return axios.get('/api/getEvent');
 		},
-		async getProducts({commit},params){
-			return await axios.get('/api/products',params);
+		getProducts({commit},params){
+			return axios.get('/api/products',params);
 		},
-		async getProduct({commit},id){
-			return await axios.get('/api/products/' + id);
+		getProduct({commit},id){
+			return axios.get('/api/products/' + id);
 		},
-		async getPayments({commit},params){			
-			return await axios.get('/api/payments',params);
+		getPayments({commit},params){			
+			return axios.get('/api/payments',params);
 		},
 		payProduct({commit},params){			
 			return axios.post('/api/payProduct',params);

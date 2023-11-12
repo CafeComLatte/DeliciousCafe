@@ -8,12 +8,13 @@ import * as components from "vuetify/components"
 import * as directives from "vuetify/directives"
 
 import LoadingView from '@/components/utils/LoadingView'
+import NoDataView from '@/components/utils/NoDataView'
 import AlertDialog from "@/components/dialog/AlertDialog"
 import UserInfoChangeDialog from "@/components/dialog/UserInfoChangeDialog"
 
 import {ref} from 'vue'
 
-const v = ref(6);
+const v = ref(7);
 
 const vuetify = createVuetify({
   components,
@@ -22,6 +23,7 @@ const vuetify = createVuetify({
 
 const app = createApp(App)
 .component('LoadingView',LoadingView)
+.component('NoDataView',NoDataView)
 .component('AlertDialog',AlertDialog)
 .component('UserInfoChangeDialog',UserInfoChangeDialog)
 

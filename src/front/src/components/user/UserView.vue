@@ -33,7 +33,7 @@ async function init() {
 }
 
 async function asyncGetUserInfo() {
-	await proxy.$store.dispatch('user').then(res => {
+	proxy.$store.dispatch('user').then(res => {
 		if (res.data.error === '') {
 			user_data.value = res.data.data;
 		}
@@ -57,13 +57,15 @@ const dialog_alert = computed(() => {
 });
 
 const saveDialog = async (name, val) => {
-	proxy.$store.dispatch('closeUserInfoChangeDialog');
-	proxy.$store.dispatch('openLoading');
-	await proxy.$store.dispatch('updateUserInfo', { name: name, value: val }).then(res => {
-		console.log(res.data);
-	});
-	await init();
-	proxy.$store.dispatch('closeLoading');
+	try{
+		proxy.$store.dispatch('closeUserInfoChangeDialog');
+		proxy.$store.dispatch('openLoading');
+		await proxy.$store.dispatch('updateUserInfo', { name: name, value: val });
+		await init();
+		proxy.$store.dispatch('closeLoading');
+	}catch(error){
+		console.log("UserView saveDialog error : " + error);
+	}
 }
 
 const closeDialog = () => {
@@ -73,20 +75,24 @@ const closeDialog = () => {
 //////////////////////////user setting info
 
 watch(()=> user_setting_info.value.phone,async(cur,prev)=>{ 
-	proxy.$store.dispatch('openLoading');
-	await proxy.$store.dispatch('updateUserSettingInfo', { name: "phone", value: cur }).then(res => {
-		console.log(res.data);
-	});
-	await init();
-	proxy.$store.dispatch('closeLoading');
+	try{
+		proxy.$store.dispatch('openLoading');
+		await proxy.$store.dispatch('updateUserSettingInfo', { name: "phone", value: cur });
+		await init();
+		proxy.$store.dispatch('closeLoading');
+	}catch(error){
+		console.log("UserView watch error : " + error);
+	}
 });
 watch(()=> user_setting_info.value.email,async(cur,prev)=>{ 
-	proxy.$store.dispatch('openLoading');
-	await proxy.$store.dispatch('updateUserSettingInfo', { name: "email", value: cur }).then(res => {
-		console.log(res.data);
-	});
-	await init();
-	proxy.$store.dispatch('closeLoading');
+	try{
+		proxy.$store.dispatch('openLoading');
+		await proxy.$store.dispatch('updateUserSettingInfo', { name: "email", value: cur });
+		await init();
+		proxy.$store.dispatch('closeLoading');
+	}catch(error){
+		console.log("UserView watch error : " + error);
+	}
 });
 
 const changeSetting = (val) =>{

@@ -1,13 +1,21 @@
-<template>	
-	<router-view />
+<template>
+	<div>
+		<router-view name="header"></router-view>
+		<router-view name="navi"></router-view>
+		<router-view name="main"></router-view>
+		<router-view name="footer"></router-view>
+		<router-view></router-view>
+	</div>
 </template>
 <script setup>
-import {ref} from 'vue'
-const v = ref(16);
+import { ref } from 'vue'
+
+const v = ref(38);
+
+console.log("current mode : " + process.env.VUE_APP_TEST);
 
 </script>
 <style scoped>
-
 :global(*) {
 	box-sizing: border-box;
 	margin: 0;
@@ -15,22 +23,15 @@ const v = ref(16);
 	font-family: "Nanum HaNaSonGeurSsi";
 	list-style: none;
 	text-overflow: ellipsis;
-	overflow: hidden;
+	/*overflow: hidden;*/
 	white-space: nowrap;
 }
 
-:global(*::after) {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
+:global(.clearfix::after){
+	content:""; 
+	display:table; 
+	clear:both;
 }
-
-:global(*::before) {
-	box-sizing: border-box;
-	margin: 0;
-	padding: 0;
-}
-
 
 :global(.left) {
 	float: left;
@@ -47,5 +48,10 @@ const v = ref(16);
 :global(.f-30) {
 	font-size: 30px;
 }
-
+:global(.f-20) {
+	font-size: 20px;
+}
+:global(.f-10) {
+	font-size: 10px;
+}
 </style>

@@ -1,28 +1,37 @@
 <template>
 	<div id="search">
 		<div id="search_wrap">
-			<button class="search_button"><img :src="getFormat('search_product.png', 'image')" /></button>
-			<input type="text" :placeholder="searchPlaceholder" />
+			<button @click="search(search_name)" class="search_button"><img :src="getFormat('search_product.png', 'image')" /></button>
+			<input v-model="search_name" type="text" :search_place_holder="info.search_place_holder" />
 			<button class="cancel_button"><img :src="getFormat('cancel.png', 'image')" /></button>
 		</div>
 	</div>
 </template>
 <script setup>
-import {getCurrentInstance,defineProps,ref} from 'vue'
+import {getCurrentInstance,defineProps,ref,computed} from 'vue'
 const {proxy} = getCurrentInstance();
 
-const v = ref(0);
-
-const searchPlaceholder = ref(props.searchPlaceholder);
+const v = ref(3);
 
 const props = defineProps({
-	searchPlaceholder : {
+	search_place_holder : {
 		type: String,
-		default: '상품 검색',
 		required: true
+	},
+	onSearch: {
+		type: Function
 	}
 });
 
+const search_name = ref('');
+
+const info = computed(()=>{
+	return props;
+});
+
+const search = (search_name) => {
+	info.value.onSearch(search_name);
+}
 
 const getFormat = (data,type) => {
 	if(type === 'image'){
@@ -37,7 +46,7 @@ const getFormat = (data,type) => {
 	
 };
 </script>
-<style>
+<style scoped>
 #search{
 	width: 1000px;
 	height: 60px;	

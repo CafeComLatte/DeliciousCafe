@@ -1,15 +1,19 @@
 import {createRouter, createWebHistory} from 'vue-router'
 import {ref} from 'vue'
+import HeaderView from '@/components/HeaderView.vue'
+import NaviView from '@/components/NaviView.vue'
+import MainView from '@/components/MainView.vue'
+import FooterView from '@/components/FooterView.vue'
 
-const v = ref(6);
+const v = ref(13);
 
 const routes = [
 	
-	{path: "/site", name : "MainView", component:()=> import('@/components/MainView.vue'),
+	{path: "/site", name : "MainDefaultView", components: {header:HeaderView,navi:NaviView,main:MainView,footer:FooterView},
 		children : [
 			{
 				path : 'main',
-				component:()=> import('@/components/MainPageView.vue')
+				component:()=> import('@/components/mainpage/MainPageView.vue')
 			},
 			{
 				path : 'user',
@@ -17,7 +21,7 @@ const routes = [
 			},
 			{
 				path : 'products',
-				component:()=> import('@/components/ProductListView.vue')
+				component:()=> import('@/components/product/ProductListView.vue')
 			},
 			{
 				path : 'payments',
@@ -26,7 +30,7 @@ const routes = [
 			},
 			{
 				path : 'products/:id',
-				component:()=> import('@/components/ProductDetailsView.vue'),
+				component:()=> import('@/components/product/ProductDetailsView.vue'),
 				props:true
 			}
 		]

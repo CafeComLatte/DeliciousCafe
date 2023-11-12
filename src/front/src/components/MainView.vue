@@ -1,21 +1,16 @@
 <template>
-	<div id="main">
-		<HeaderView/>
-		<NaviView/>
+	<div id="main" class="clearfix">
 		<div id="main_side">
 			<LoadingView v-if="loading"/>
 			<router-view class="main_side_wrap"/>	
 		</div>
-		<FooterView/>
 	</div>
 </template>
 
 <script setup>
-import HeaderView from './HeaderView.vue'
-import NaviView from './NaviView'
-import FooterView from './FooterView'
 import {ref,getCurrentInstance,computed} from 'vue'
-const v = ref(6);
+
+const v = ref(11);
 
 const {proxy} = getCurrentInstance();
 
@@ -23,7 +18,7 @@ const loading = computed(()=>{
 	return proxy.$store.state.loading;	
 });
 </script>
-<style>
+<style scoped>
 #main {
 	height : 1200px;
 	width : 1263px;
@@ -42,4 +37,5 @@ const loading = computed(()=>{
 	margin: 0 auto;
 	width: 1000px;
 }
+
 </style>

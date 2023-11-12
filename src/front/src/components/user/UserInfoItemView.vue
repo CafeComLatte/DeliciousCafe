@@ -14,7 +14,7 @@
 	</li>
 </template>
 <script setup>
-import { ref, defineProps,defineEmits, computed, getCurrentInstance } from 'vue'
+import { ref, defineProps, computed, getCurrentInstance } from 'vue'
 const v = ref(25);
 
 const { proxy } = getCurrentInstance();

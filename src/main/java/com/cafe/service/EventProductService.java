@@ -15,8 +15,8 @@ public class EventProductService {
 	@Autowired
 	private EventProductRepository eventProductRepository;
 	
-	public List<EventProductVO> findAllById(Iterable<String> ids) {
-		return eventProductRepository.findAllById(ids);
+	public List<EventProductVO> findAll() {
+		return eventProductRepository.findAll();
 	}
 	
 }

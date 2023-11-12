@@ -46,7 +46,7 @@
 import PageView from '@/components/PageView'
 import { ref, onMounted, getCurrentInstance } from 'vue'
 
-const v = ref(27);
+const v = ref(28);
 
 const { proxy } = getCurrentInstance();
 const itemList = ref([]);
@@ -99,7 +99,7 @@ const getFormat = (data,type) => {
 	
 };
 </script>
-<style>
+<style scoped>
 
 #payment_list>#payment_list_wrap>#payment {
 	width: 1000px;

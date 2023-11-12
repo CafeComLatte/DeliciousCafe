@@ -1,10 +1,10 @@
 <template>
-	<div id="product_details">
+	<div id="product_details" class="clearfix">
 		<div id="product_details_wrap">
-			<div class="product_details-thumbnail" v-if="item.image !== ''">
+			<div class="product_details-thumbnail left" v-if="item.image !== ''">
 				<img :src="getFormat(item.image,'image')"/>
 			</div>
-			<div class="product_details-content-payment">
+			<div class="product_details-content-payment left">
 				<p class="f-40">{{item.product_name}}</p>
 				<p>{{getFormat(item.price,'price')}}</p>
 				<div class="product_choice">
@@ -27,13 +27,13 @@
 	</div>
 </template>
 <script setup>
-import {ref,onBeforeMount,defineProps,getCurrentInstance} from 'vue'
+import {ref,defineProps,getCurrentInstance} from 'vue'
 import {useRouter} from 'vue-router'
 
 const router = useRouter();
 const {proxy} = getCurrentInstance();
 
-const v = ref(75);
+const v = ref(83);
 
 const item = ref({
 	product_name:'',
@@ -57,31 +57,13 @@ const props = defineProps({
 	}
 });
 
-
-onBeforeMount(async()=>{
-	await proxy.$store.dispatch('getProduct',props.id).then(res=> {
-		if(res.data.result.error === ''){
-			item.value.product_name = res.data.data.name;
-			item.value.price = res.data.data.price;
-			item.value.sys_date = res.data.data.sys_date;
-			item.value.image = res.data.data.image;
-			
-			payment_info.value.total_price = res.data.data.price;
-			
-		}else{
-			alert("해당 상품은 현재 품절되었습니다.");
-			router.push('/site/products');
-		}
-		
-		
-	});
-});
+init();
 
 const payProduct = () => {
 	if (confirm("구매를 진행하시겠습니까?")) {
 		result.value = Object.assign(item.value,payment_info.value);
 		proxy.$store.dispatch('payProduct',result.value).then(res=>{
-			if(res.data.result.error === ''){
+			if(res.data.error === ''){
 				alert("구매가 완료되었습니다.");
 				router.push('/site/products');
 			}else{
@@ -97,6 +79,27 @@ const plus = () =>{
 	payment_info.value.count = payment_info.value.count + 1;
 	payment_info.value.total_price = item.value.price * payment_info.value.count;
 };
+
+function init(){
+	getProductDetails();
+}
+
+function getProductDetails(){
+	proxy.$store.dispatch('getProduct',props.id).then(res=> {
+		if(res.data.error === ''){
+			item.value.product_name = res.data.data.name;
+			item.value.price = res.data.data.price;
+			item.value.sys_date = res.data.data.sys_date;
+			item.value.image = res.data.data.image;
+			
+			payment_info.value.total_price = res.data.data.price;
+			
+		}else{
+			alert("해당 상품은 현재 품절되었습니다.");
+			router.push('/site/products');
+		}		
+	});
+}
 
 const getFormat = (data,type) => {
 	if(type === 'image'){
@@ -116,7 +119,6 @@ const getFormat = (data,type) => {
 #product_details>#product_details_wrap{
 	width : 1000px;
 	height : 330px;
-	float: left;
 } 
 
 #product_details>#product_details_wrap>.product_details-thumbnail{

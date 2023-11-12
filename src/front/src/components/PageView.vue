@@ -8,7 +8,7 @@
 <script setup>
 import {defineProps,ref} from 'vue'
 
-const v = ref(2);
+const v = ref(3);
 
 const props = defineProps({
 	totalPages : {
@@ -32,7 +32,7 @@ const changePage = (page) => {
 };
 
 </script>
-<style>
+<style scoped>
 #page {
 	margin: 10px 0;
 	text-align: center;

@@ -23,4 +23,8 @@ public class ProductService {
 	public Optional<ProductVO> findById(String id){
 		return productRepository.findById(id);
 	}
+
+	public Page<ProductVO> findByNameContaining(String search_name,Pageable pageable) {
+		return productRepository.findByNameContaining(search_name, pageable);
+	}
 }

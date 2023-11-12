@@ -8,6 +8,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cafe.dto.ProductPageDTO;
@@ -24,10 +25,10 @@ public class ProductController {
 	ProductService productService;
 	
 	@GetMapping("/products")
-	public ProductPageDTO getProducts(@PageableDefault Pageable pageable) {
-		System.out.println(pageable.getPageNumber());
-		System.out.println(pageable.getPageSize());
-		return ProductPageDTO.of(productService.findAll(pageable));
+	public ProductPageDTO getProducts(@PageableDefault Pageable pageable, @RequestParam String search_name) {
+		System.out.println(search_name + " product search");
+		
+		return ProductPageDTO.of(productService.findByNameContaining(search_name,pageable));
 	}
 	
 	@GetMapping("/products/{id}")

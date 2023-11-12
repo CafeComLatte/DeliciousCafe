@@ -72,8 +72,8 @@ const validPassword = () => {
 	}
 }
 
-const idCheck = async (id) => {	
-	await proxy.$store.dispatch('idCheck',{params:{id:id}}).then(res=>{
+const idCheck = (id) => {	
+	proxy.$store.dispatch('idCheck',{params:{id:id}}).then(res=>{
 		try{
 			if(res.data.error === ''){
 				if(res.data.data === 'ok'){
