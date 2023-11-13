@@ -29,7 +29,7 @@
 <script setup>
 import { ref, getCurrentInstance,onMounted } from 'vue'
 
-const v = ref(35);
+const v = ref(37);
 
 const navColor = ref(false);
 
@@ -38,6 +38,7 @@ const { proxy } = getCurrentInstance();
 const id = localStorage.getItem('id');
 
 onMounted(()=>{
+	if(window.scrollY>0) navColor.value = true;
 	window.addEventListener('scroll',sEvent);
 });
 
@@ -52,7 +53,7 @@ const sEvent = () => {
 
 const logout = async () => {
 	if (confirm("로그아웃을 하시겠습니까?")) {
-		await proxy.$store.dispatch('logout');
+		await proxy.$store.dispatch('user/logout');
 		localStorage.clear();
 	}
 

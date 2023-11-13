@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router/router'
-import store from './store/store'
+import store from '@/store/index.js'
 import "vuetify/styles";
 import { createVuetify } from "vuetify";
 import * as components from "vuetify/components"
@@ -14,7 +14,7 @@ import UserInfoChangeDialog from "@/components/dialog/UserInfoChangeDialog"
 
 import {ref} from 'vue'
 
-const v = ref(7);
+const v = ref(8);
 
 const vuetify = createVuetify({
   components,

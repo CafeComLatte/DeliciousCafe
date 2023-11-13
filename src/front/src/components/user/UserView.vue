@@ -19,7 +19,7 @@ import { ref, getCurrentInstance, computed, watch} from 'vue'
 
 const { proxy } = getCurrentInstance();
 
-const v = ref(65);
+const v = ref(66);
 
 const user_data = ref({ id: '', password: '', name: '', email: '', phone: '' });
 const user_setting_info = ref({email : false,phone : false});
@@ -33,7 +33,7 @@ async function init() {
 }
 
 async function asyncGetUserInfo() {
-	proxy.$store.dispatch('user').then(res => {
+	proxy.$store.dispatch('user/user').then(res => {
 		if (res.data.error === '') {
 			user_data.value = res.data.data;
 		}
@@ -41,7 +41,7 @@ async function asyncGetUserInfo() {
 }
 
 async function asyncGetUserSettingInfo(){
-	await proxy.$store.dispatch('userSetting').then(res=>{
+	await proxy.$store.dispatch('user/userSetting').then(res=>{
 		if(res.data.error === ''){
 			user_setting_info.value.email = res.data.data.email;
 			user_setting_info.value.phone = res.data.data.phone;
@@ -53,14 +53,14 @@ async function asyncGetUserSettingInfo(){
 //////////////////////user info dialog
 
 const dialog_alert = computed(() => {
-	return proxy.$store.state.user_dialog_alert;
+	return proxy.$store.state.user.user_dialog_alert;
 });
 
 const saveDialog = async (name, val) => {
 	try{
-		proxy.$store.dispatch('closeUserInfoChangeDialog');
+		proxy.$store.dispatch('user/closeUserInfoChangeDialog');
 		proxy.$store.dispatch('openLoading');
-		await proxy.$store.dispatch('updateUserInfo', { name: name, value: val });
+		await proxy.$store.dispatch('user/updateUserInfo', { name: name, value: val });
 		await init();
 		proxy.$store.dispatch('closeLoading');
 	}catch(error){
@@ -77,7 +77,7 @@ const closeDialog = () => {
 watch(()=> user_setting_info.value.phone,async(cur,prev)=>{ 
 	try{
 		proxy.$store.dispatch('openLoading');
-		await proxy.$store.dispatch('updateUserSettingInfo', { name: "phone", value: cur });
+		await proxy.$store.dispatch('user/updateUserSettingInfo', { name: "phone", value: cur });
 		await init();
 		proxy.$store.dispatch('closeLoading');
 	}catch(error){
@@ -87,7 +87,7 @@ watch(()=> user_setting_info.value.phone,async(cur,prev)=>{
 watch(()=> user_setting_info.value.email,async(cur,prev)=>{ 
 	try{
 		proxy.$store.dispatch('openLoading');
-		await proxy.$store.dispatch('updateUserSettingInfo', { name: "email", value: cur });
+		await proxy.$store.dispatch('user/updateUserSettingInfo', { name: "email", value: cur });
 		await init();
 		proxy.$store.dispatch('closeLoading');
 	}catch(error){

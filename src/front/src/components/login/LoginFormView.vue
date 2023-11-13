@@ -1,29 +1,29 @@
 <template>
-	<AlertDialog v-if="dialog_alert"
-				:dialog="dialog_alert" 
+	<AlertDialog v-if="userStore.dialog_alert"
+				:dialog="userStore.dialog_alert" 
 				:onClose="close" 
-				:content="dialog_alert_info.content" 
-				:dialog_type="dialog_alert_info.dialog_type">
+				:content="userStore.dialog_alert_info.content" 
+				:dialog_type="userStore.dialog_alert_info.dialog_type">
 	</AlertDialog>
 		
-	<v-form ref="loginForm" validate-on="input" v-model="isValid">
+	<v-form ref="loginForm" validate-on="input" v-model="valid">
 		<v-responsive>
 			<v-text-field v-model="user_data.id" label="id" type="id" :rules="[rules.required]" variant="solo"
 				prepend-inner-icon="getImg('person_uncheck.png')" />
 			<v-text-field v-model="user_data.password" label="password" type="password" :rules="[rules.required]"
 				autoComplete="on" variant="solo" prepend-inner-icon="mdi-map-marker" />
-			<v-btn @click="login" :disabled="!isValid">로그인</v-btn>
+			<v-btn @click="login" :disabled="!valid">로그인</v-btn>
 		</v-responsive>
 	</v-form>
 </template>
 <script setup>
 import { ref, getCurrentInstance, computed } from 'vue'
 
-const v = ref(19);
+const v = ref(22);
 
 const { proxy } = getCurrentInstance();
 
-const isValid = ref(false);
+const valid = ref(false);
 
 const user_data = ref({ id: '', password: '' });
 
@@ -33,7 +33,7 @@ const rules = {};
 rules.required = value => !!value || '필수입력 사항입니다.';
 
 const login = () => {
-	proxy.$store.dispatch('login', user_data.value).then(res => {
+	proxy.$store.dispatch('user/login', user_data.value).then(res => {
 		try {
 			if (res.data.error === '') {
 				localStorage.setItem('id', user_data.value.id);
@@ -54,21 +54,17 @@ const login = () => {
 	});
 };
 
-const dialog_alert = computed(() => {	
-	return proxy.$store.state.dialog_alert;
+const userStore = computed(() => {	
+	return proxy.$store.state.user;
 });
 
-const dialog_alert_info = computed(()=>{
-	return proxy.$store.state.dialog_alert_info;
-});
-
-const openDialogAlert = (data) => {	
-	proxy.$store.dispatch('openDialogAlert',data);
+const openDialogAlert = (data) => {
+	proxy.$store.dispatch('user/openDialogAlert',data);
 };
 
 const close = () => {
-	const type = proxy.$store.state.dialog_alert_info.callback_type;
-	proxy.$store.dispatch('closeDialogAlert');
+	const type = userStore.value.dialog_alert_info.callback_type;
+	proxy.$store.dispatch('user/closeDialogAlert');
 	if(type === 'loginSuccess'){
 		proxy.$router.push('/site/main');
 	}
