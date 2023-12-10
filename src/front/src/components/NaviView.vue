@@ -8,17 +8,17 @@
 				<li><router-link to="/site/products">상품 검색</router-link></li>
 				<li><router-link to="/site/payments">결제 내역</router-link></li>
 			</ul>
-			<div v-if="id === null" id="login">
-				<router-link to="/login">
+			<div v-if="id === null" id="login" class="flex center">
+				<router-link to="/login" class="align-content-center">
 					<img id="login_img" v-bind:src="getImg('login.png')" />
 				</router-link>
 			</div>
-			<div v-else id="login">
-				<router-link class="flex" to="/site/user">
+			<div v-else id="login" class="flex center">
+				<router-link to="/site/user" class="align-content-center">
 					<img id="user_img" :src="getImg('person_uncheck.png')" />
 					<span>{{ id }}</span>
 				</router-link>
-				<router-link to="/login" @click="logout">
+				<router-link to="/login" @click="logout" class="align-content-center">
 					<img id="login_img" :src="getImg('logout.png')" />
 				</router-link>
 			</div>
@@ -29,7 +29,7 @@
 <script setup>
 import { ref, getCurrentInstance,onMounted } from 'vue'
 
-const v = ref(37);
+const v = ref(38);
 
 const navColor = ref(false);
 
@@ -100,22 +100,14 @@ a {
 }
 
 #nav>#nav_wrap #login {
-	display: flex;
-	justify-content: center;
 	float: right;
 	padding: 30px 0;
 }
 
 #nav>#nav_wrap #login>a {
 	padding: 0 10px;
-	align-content: center;
+	
 }
-
-#nav>#nav_wrap #login>.flex {
-	display: flex;
-
-}
-
 
 #login_img,
 #user_img,

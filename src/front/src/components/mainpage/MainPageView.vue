@@ -11,7 +11,7 @@
 import EventProductsView from '@/components/mainpage/EventProductsView'
 import EventView from '@/components/mainpage/EventView'
 import { ref, getCurrentInstance} from 'vue'
-const v = ref(23);
+const v = ref(36);
 const { proxy } = getCurrentInstance();
 
 const event_product = ref([]);
@@ -19,14 +19,15 @@ const event_data = ref({ id: '', image: '' });
 
 init();
 
-function init(){	
+
+function init(){		
 	asyncGetEvent();
-	asyncGetEventProduct();		
+	asyncGetEventProduct();
 }
 
-function asyncGetEvent() {
+async function asyncGetEvent() {
 	try {
-		proxy.$store.dispatch('getEvent').then(response=>{
+		await proxy.$store.dispatch('getEvent').then(response=>{
 			if(response.data.error === ''){
 				event_data.value = response.data.data;
 			}	
@@ -36,9 +37,9 @@ function asyncGetEvent() {
 	}
 }
 
-function asyncGetEventProduct(){
+async function asyncGetEventProduct(){
 	try{
-		proxy.$store.dispatch('getEventProduct').then(response=>{
+		await proxy.$store.dispatch('getEventProduct').then(response=>{
 			if(response.data.error === ''){
 				event_product.value = response.data.data;
 			}	

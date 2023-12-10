@@ -8,6 +8,8 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.cafe.entity.UsersVO;
+import java.util.List;
+
 
 @Repository
 public interface UsersRepository extends JpaRepository<UsersVO, String>{
@@ -17,6 +19,8 @@ public interface UsersRepository extends JpaRepository<UsersVO, String>{
 	int countById(String id);
 	
 	int countByIdAndPassword(String id, String password);
+	
+	Optional<UsersVO> findByIdAndPassword(String id, String password);
 	
 	Optional<UsersVO> findById(String id);
 }

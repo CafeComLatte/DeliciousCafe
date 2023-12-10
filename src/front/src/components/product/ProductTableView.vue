@@ -2,14 +2,14 @@
 	<div id="product">
 		<table>
 			<tbody>
-				<tr v-for="(item, index) in items" :key="index" @click="goDetails(item.id)">
+				<tr v-for="(item, index) in items" :key="index" @click="goDetails(item.id)" class="flex space-between">
 					<img :src="getFormat(item.image, 'image')" />
-					<div class="product_content">
+					<div class="product_content inline-flex space-between column">
 						<p class="f-40">{{ item.name }}</p>
 						<p>{{ item.contents }}</p>
 						<p>{{ getFormat(item.sys_date, 'date') }}</p>
 					</div>
-					<span>{{ getFormat(item.price, 'price') }}</span>
+					<span class="inline-flex center align-items-center">{{ getFormat(item.price, 'price') }}</span>
 				</tr>
 			</tbody>
 		</table>
@@ -17,7 +17,7 @@
 </template>
 <script setup>
 import {ref,getCurrentInstance,defineProps} from 'vue'
-const v = ref(3);
+const v = ref(5);
 
 const {proxy} = getCurrentInstance();
 
@@ -54,8 +54,6 @@ const getFormat = (data,type) => {
 #product>table>tbody>tr {
 	width: 1000px;
 	height: 150px;
-	display:flex;
-	justify-content: space-between;
 	padding : 10px 0;
 	cursor: pointer;
 }
@@ -66,18 +64,12 @@ const getFormat = (data,type) => {
 
 #product>table>tbody>tr>.product_content{
 	width: 600px;
-	display:inline-flex;
-	justify-content: space-between;
-	flex-direction: column;
 	padding-left: 10px;
 }
 
 
 #product>table>tbody>tr>span{
 	width: 200px;
-	display:inline-flex;
-	justify-content: center;
-	align-items: center;
 }
 
 #product>table>tbody>tr:nth-child(-n+2){

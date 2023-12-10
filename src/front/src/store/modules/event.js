@@ -1,7 +1,7 @@
 import axios from '@/axios/index.js'
 import {ref} from 'vue'
 
-const v = ref(1);
+const v = ref(5);
 
 const event = {
 	state : {
@@ -14,11 +14,11 @@ const event = {
 		
 	},
 	actions : {
-		getEventProduct({commit}){			
-			return axios.get('/api/getEventProduct');
+		async getEventProduct({commit}){			
+			return await axios.get('/api/getEventProduct');
 		},
-		getEvent({commit}){
-			return axios.get('/api/getEvent');
+		async getEvent({commit}){
+			return await axios.get('/api/getEvent');
 		},
 		
 	}

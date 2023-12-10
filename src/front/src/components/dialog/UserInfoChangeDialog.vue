@@ -4,7 +4,7 @@
 			<v-card-text>
 				<v-text-field v-model="info_value" class="text-field" :label="info_name" type="text"/>	
 			</v-card-text>
-			<v-card-actions class="dialog_btn-wrap">
+			<v-card-actions class="space-evenly">
 				<v-btn color="primary" text @click.stop="saveDialog(info_name,info_value)">저장</v-btn>
 				<v-btn color="primary" text @click.stop="closeDialog">취소</v-btn>
 			</v-card-actions>
@@ -13,7 +13,7 @@
 </template>
 <script setup>
 import {defineProps,ref,computed,getCurrentInstance} from 'vue'
-const v = ref(18);
+const v = ref(21);
 
 const {proxy} = getCurrentInstance();
 
@@ -34,7 +34,7 @@ const info = computed(() => {
 });
 
 const info_name = computed(() => {
-	return proxy.$store.state.user_dialog_alert_info.item_name;
+	return proxy.$store.state.user.user_dialog_alert_info.item_name;
 });
 
 const info_value = ref('');
@@ -48,9 +48,4 @@ const closeDialog = () => {
 };
 
 </script>
-<style scoped>
-
-.dialog_btn-wrap {
-	justify-content: space-evenly;
-}
-</style>
+<style scoped></style>

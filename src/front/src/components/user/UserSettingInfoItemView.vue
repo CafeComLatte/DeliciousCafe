@@ -1,6 +1,6 @@
 <template>
 	<li>
-		<div class="left">
+		<div class="left flex center">
 			<img :src="getImg(image)" />
 			<span>{{name}}</span>
 		</div>
@@ -11,7 +11,7 @@
 </template>
 <script setup>
 import { ref,getCurrentInstance,defineProps,defineEmits,computed } from 'vue'
-const v = ref(21);
+const v = ref(22);
 
 const { proxy } = getCurrentInstance();
 const props = defineProps({
@@ -53,8 +53,6 @@ li:nth-child(1) {
 
 li:nth-child(1)>.left {
 	margin: 20px 0;
-	display: flex;
-	justify-content: center;
 }
 
 li:nth-child(1)>.right {
@@ -64,8 +62,6 @@ li:nth-child(1)>.right {
 
 li:nth-child(2)>.left {
 	margin: 20px 0;
-	display: flex;
-	justify-content: center;
 }
 
 li:nth-child(2)>.right {

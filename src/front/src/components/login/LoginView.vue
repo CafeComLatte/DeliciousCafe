@@ -14,7 +14,7 @@ import { ref, getCurrentInstance } from 'vue'
 
 const { proxy } = getCurrentInstance();
 
-const a = ref(17);
+const a = ref(19);
 
 const getImg = (img) => {
 	return proxy.$getImgFormat(img);
@@ -32,7 +32,7 @@ const getImg = (img) => {
 	margin-left: auto;
 	margin-right: auto;
 	height: 250px;
-	width: 600px;
+	width: 500px;
 }
 
 #login>#login_image_wrap {
@@ -40,11 +40,11 @@ const getImg = (img) => {
 	margin-left: auto;
 	margin-right: auto;
 	height: 350px;
-	width: 600px;
+	width: 500px;
 }
 
 #login>#login_image_wrap>#login_image {
 	height: 350px;
-	width: 600px;
+	width: 500px;
 }
 </style>

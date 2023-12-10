@@ -1,71 +1,73 @@
 <template>
-	<AlertDialog v-if="userStore.dialog_alert"
-				:dialog="userStore.dialog_alert" 
-				:onClose="close" 
-				:content="userStore.dialog_alert_info.content" 
-				:dialog_type="userStore.dialog_alert_info.dialog_type">
+	<AlertDialog v-if="userStore.dialog_alert" :dialog="userStore.dialog_alert" :onClose="close"
+		:content="userStore.dialog_alert_info.content" :dialog_type="userStore.dialog_alert_info.dialog_type">
 	</AlertDialog>
-		
-	<v-form ref="loginForm" validate-on="input" v-model="valid">
-		<v-responsive>
-			<v-text-field v-model="user_data.id" label="id" type="id" :rules="[rules.required]" variant="solo"
-				prepend-inner-icon="getImg('person_uncheck.png')" />
-			<v-text-field v-model="user_data.password" label="password" type="password" :rules="[rules.required]"
-				autoComplete="on" variant="solo" prepend-inner-icon="mdi-map-marker" />
-			<v-btn @click="login" :disabled="!valid">로그인</v-btn>
-		</v-responsive>
-	</v-form>
+
+	<form ref="loginForm" @submit.prevent="login">
+		<LoginFormItem 
+					name="id"
+					:value="login_data.id"
+					@update:value="newValue => login_data.id = newValue"/>
+		<LoginFormItem 
+					name="password"
+					:value="login_data.password"
+					@update:value="newValue => login_data.password = newValue"/>
+		<button @keyup.enter="submit" :disabled="disabled" type="submit" tabIndex="3" class="w-500 h-50 f-20 background-silver pointer radius-5">로그인</button>
+	</form>
 </template>
 <script setup>
-import { ref, getCurrentInstance, computed } from 'vue'
+import LoginFormItem from '@/components/login/LoginFormItem'
+import { ref, getCurrentInstance, computed} from 'vue'
 
-const v = ref(22);
+const v = ref(50);
 
 const { proxy } = getCurrentInstance();
 
-const valid = ref(false);
-
-const user_data = ref({ id: '', password: '' });
+const login_data = ref({id:'',password:''});
 
 const loginForm = ref('');
 
-const rules = {};
-rules.required = value => !!value || '필수입력 사항입니다.';
-
-const login = () => {
-	proxy.$store.dispatch('user/login', user_data.value).then(res => {
-		try {
-			if (res.data.error === '') {
-				localStorage.setItem('id', user_data.value.id);
-				
-				openDialogAlert({content : "로그인 성공",dialog_type : "",callback_type:"loginSuccess"});
-				
-			} else {
-				openDialogAlert({content : "로그인 실패",dialog_type : "",callback_type:"loginFail"});
-				loginForm.value.reset();
-			}
-		} catch (error) {
-			openDialogAlert({content : "로그인 실패",dialog_type : "",callback_type:"loginFail"});
-			console.error("login front error : " + error);
+const login = async () => {	
+	try {
+		const response = await proxy.$store.dispatch('user/login',login_data.value);
+		if (response.data.error === '') {
+			localStorage.setItem('id', response.data.data.id);
+			openDialogAlert({ content: "로그인 성공", dialog_type: "", callback_type: "loginSuccess" });
+		} else {
+			openDialogAlert({ content: "로그인 실패", dialog_type: "", callback_type: "loginFail" });
+			initLogin();
+			
 		}
-	}).catch(error => {
-		openDialogAlert({content : "로그인 실패",dialog_type : "",callback_type:"loginFail"});
-		console.error("login front error : " + error.response);
-	});
+	} catch (error) {
+		openDialogAlert({ content: "로그인 실패", dialog_type: "", callback_type: "loginFail" });
+		console.error("login front error : " + error);
+		initLogin();
+	}
 };
 
-const userStore = computed(() => {	
+const initLogin = () => {
+	loginForm.value.reset();
+	login_data.value.id = '';
+	login_data.value.password = '';
+};
+
+const userStore = computed(() => {
 	return proxy.$store.state.user;
 });
 
+const disabled = computed(() => {
+	if(login_data.value.id === '' || login_data.value.password === '') return true;
+	return false;
+});
+
 const openDialogAlert = (data) => {
-	proxy.$store.dispatch('user/openDialogAlert',data);
+	proxy.$store.dispatch('user/openDialogAlert', data);
 };
 
 const close = () => {
 	const type = userStore.value.dialog_alert_info.callback_type;
 	proxy.$store.dispatch('user/closeDialogAlert');
-	if(type === 'loginSuccess'){
+	if (type === 'loginSuccess') {
 		proxy.$router.push('/site/main');
 	}
 };

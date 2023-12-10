@@ -3,12 +3,5 @@
 	
   </div>
 </template>
-
-<script setup>
-
-</script>
-<style scoped>
-#header {
-	
-}
-</style>
+<script setup></script>
+<style scoped></style>

@@ -25,14 +25,14 @@ public class CustomInterceptor implements HandlerInterceptor{
 			sCheck = true;
 		}
 		
-		System.out.println(request.getRequestURI());
 		
-		if((request.getRequestURI().startsWith("/site") || request.getRequestURI().startsWith("/api")) && !sCheck) {
-			System.out.println("로그인 안된상태");
-			response.sendRedirect("/login");
-		}
-		else {
+		if(request.getRequestURI().startsWith("/site") || request.getRequestURI().startsWith("/api")) {		
+			System.out.println("request URI : " + request.getRequestURI() + " , session id : " + id);
 			
+			if(!sCheck) {
+				System.out.println("로그인 안된상태");
+				response.sendRedirect("/login");
+			}
 		}
 		
 		return HandlerInterceptor.super.preHandle(request, response, handler);

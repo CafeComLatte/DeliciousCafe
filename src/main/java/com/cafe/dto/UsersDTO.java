@@ -25,7 +25,7 @@ public class UsersDTO {
 	public static HashMap<String,Object> of(UsersVO user) {
 		HashMap<String, Object> hashMap = new HashMap<String, Object>();
 		
-		hashMap.put("id", user.getPassword());
+		hashMap.put("id", user.getId());
 		hashMap.put("name", user.getName());
 		hashMap.put("email", user.getEmail());
 		hashMap.put("phone", user.getPhone());

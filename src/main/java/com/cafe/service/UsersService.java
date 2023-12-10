@@ -28,6 +28,10 @@ public class UsersService {
 		return usersRepository.countByIdAndPassword(id, password);
 	}
 	
+	public Optional<UsersVO> findByIdAndPassword(String id, String password) {
+		return usersRepository.findByIdAndPassword(id, password);
+	}
+	
 	public Optional<UsersVO> findById(String id){
 		return usersRepository.findById(id);
 	}

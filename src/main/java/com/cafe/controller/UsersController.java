@@ -1,6 +1,7 @@
 package com.cafe.controller;
 
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,10 +21,11 @@ import com.cafe.entity.ErrorResponse;
 import com.cafe.entity.UsersVO;
 import com.cafe.service.UsersService;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 
-
+@Tag(name = "유저 API", description = "로그인, 회원가입, 유저정보 API")
 @RequestMapping("/api")
 @RestController
 public class UsersController {
@@ -72,21 +74,22 @@ public class UsersController {
 	public ErrorResponse login(HttpServletRequest request,@RequestBody UsersDTO usersDTO){				
 		ErrorResponse response = ErrorResponse.of(ErrorCode.SERVER_ERROR,null);
 		
-		System.out.println(usersDTO.toString() + " try login...");
-		
+		System.out.println("id : " + usersDTO.getId() + " , password : " + usersDTO.getPassword() + " try login...");
+
 		HttpSession httpSession = request.getSession();
 		
-		boolean isSuccess = usersService.countByIdAndPassword(usersDTO.getId(),usersDTO.getPassword()) == 1?true:false; 
+		Optional<UsersVO> user = usersService.findByIdAndPassword(usersDTO.getId(),usersDTO.getPassword()); 
 		
-		if(isSuccess) {
+		if(user.isPresent()) {
 			httpSession.setAttribute("id", usersDTO.getId());
 			httpSession.setAttribute("password", usersDTO.getPassword());
-			
-			response = ErrorResponse.of(ErrorCode.OK,"");
-			System.out.println(usersDTO.toString() + " login successful!!");
+
+			response = ErrorResponse.of(ErrorCode.OK,UsersDTO.of(user.get()));
+			System.out.println(usersDTO.toString() + " login successful!!");			
 		}else {
-			System.out.println(usersDTO.toString() + " login failed");
+			System.out.println(usersDTO.toString() + " login failed");	
 		}
+		
 	    return response;	    
 	}
 	

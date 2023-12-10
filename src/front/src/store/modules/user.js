@@ -1,7 +1,7 @@
 import axios from '@/axios/index.js'
 import {ref} from 'vue'
 
-const v = ref(2);
+const v = ref(3);
 
 const user = {
 	namespaced: true,
@@ -75,8 +75,8 @@ const user = {
 				
 			});
 		},
-		login({commit}, data){			
-			return axios.post('/api/login',data);
+		async login({commit}, data){			
+			return await axios.post('/api/login',data);			
 		},		
 		signUp({commit}, data){			
 			return axios.post('/api/signUp',data);

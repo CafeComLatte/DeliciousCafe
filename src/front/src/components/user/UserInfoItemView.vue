@@ -35,7 +35,7 @@ const info = computed(() => {
 });
 
 const openUserInfoChangeDialog = () => {
-	proxy.$store.dispatch('openUserInfoChangeDialog',{item_name:info.value.info_name,item_value:info.value.info_value});
+	proxy.$store.dispatch('user/openUserInfoChangeDialog',{item_name:info.value.info_name,item_value:info.value.info_value});
 };
 
 const getImg = (img) => {

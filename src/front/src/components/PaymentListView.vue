@@ -4,16 +4,16 @@
 			<div id="payment">
 				<table>
 					<tbody>
-						<tr>
-							<th>상품 명</th>
-							<th>날짜</th>
-							<th>개당 금액</th>
-							<th>수량</th>
-							<th>총 금액</th>
+						<tr class="flex space-between">
+							<th class="inline-flex center align-items-center">상품 명</th>
+							<th class="inline-flex center align-items-center">날짜</th>
+							<th class="inline-flex center align-items-center">개당 금액</th>
+							<th class="inline-flex center align-items-center">수량</th>
+							<th class="inline-flex center align-items-center">총 금액</th>
 						</tr>
-						<tr v-for="(item, index) in itemList" :key="index">
+						<tr v-for="(item, index) in itemList" :key="index" class="flex space-between">
 							<td>
-								<div class="product_content">
+								<div class="product_content flex">
 									<img :src="getFormat(item.products[0].image,'image')"/>
 									<div>
 										<p class="f-40">{{item.products[0].name}}</p>
@@ -22,16 +22,16 @@
 									</div>
 								</div>
 							</td>
-							<td>
+							<td class="inline-flex center align-items-center">
 								<span>{{getFormat(item.payment_date,'date')}} {{getFormat(item.payment_time,'time')}}</span>	
 							</td>
-							<td>
+							<td class="inline-flex center align-items-center">
 								<span>{{getFormat(item.price,'price')}}</span>
 							</td>
-							<td>
+							<td class="inline-flex center align-items-center">
 								<span>{{item.count}}</span>
 							</td>
-							<td>
+							<td class="inline-flex center align-items-center">
 								<span>{{getFormat(item.total_price,'price')}}</span>
 							</td>
 						</tr>
@@ -116,18 +116,12 @@ const getFormat = (data,type) => {
 #payment_list>#payment_list_wrap>#payment>table>tbody>tr:nth-child(1) {
 	width: 1000px;
 	height: 60px;
-	display:flex;
-	justify-content: space-between;
 	text-align: center;
 }
-
-#payment_list>#payment_list_wrap>#payment>table>tbody>tr>th{display:inline-flex; justify-content: center; align-items: center;}
 
 #payment_list>#payment_list_wrap>#payment>table>tbody>tr:nth-child(n+2) {
 	width: 1000px;
 	height: 150px;
-	display:flex;
-	justify-content: space-between;
 	padding : 10px 0;
 }
 
@@ -138,7 +132,6 @@ const getFormat = (data,type) => {
 #payment_list>#payment_list_wrap>#payment>table>tbody>tr>td>.product_content{
 	width: 350px;
 	height: 130px;
-	display:flex;
 }
 
 #payment_list>#payment_list_wrap>#payment>table>tbody>tr>td>.product_content>img {
@@ -150,12 +143,6 @@ const getFormat = (data,type) => {
 #payment_list>#payment_list_wrap>#payment>table>tbody>tr>td>.product_content>div {
 	width: 200px;
 	height: 130px;
-}
-
-#payment_list>#payment_list_wrap>#payment>table>tbody>tr>td:nth-child(n+2){
-	display:inline-flex; 
-	justify-content: center; 
-	align-items: center;
 }
 
 #payment_list>#payment_list_wrap>#payment>table>tbody>tr{

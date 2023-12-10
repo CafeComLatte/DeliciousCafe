@@ -1,117 +1,126 @@
 <template>
-	<AlertDialog v-if="dialog_alert"
-				:dialog="dialog_alert" 
-				:onClose="close" 
-				:content="dialog_alert_info.content" 
-				:dialog_type="dialog_alert_info.dialog_type">
+	<AlertDialog v-if="dialog_alert" :dialog="dialog_alert" :onClose="close" :content="dialog_alert_info.content"
+		:dialog_type="dialog_alert_info.dialog_type">
 	</AlertDialog>
-	
-	<v-form ref="formElement" validate-on="input" v-model="isValid.form">
-		<v-responsive>
-			<v-text-field ref="idElement" v-model="user_data.id" label="아이디*" type="text" @input="idCheck(user_data.id)" :rules="[rules.required, rules.length, rules.idDuplicate]" />
-			<v-text-field ref="firstPasswordElement" v-model="user_data.password" label="새 비밀번호*" type="password" autocomplete="on"
-				@input="validPassword" :rules="[rules.required, rules.length, rules.passwordDouble]" />
-			<v-text-field ref="secondPasswordElement" v-model="second_password" label="새 비밀번호 확인*" type="password"
-				autocomplete="on" @input="validPassword"
-				:rules="[rules.required, rules.length, rules.passwordDouble]" />
-			<v-text-field v-model="user_data.name" label="이름*" type="text" :rules="[rules.required]" />
-			<v-text-field v-model="user_data.email" label="이메일*" type="email" :rules="[rules.required, rules.email]" />
-			<v-text-field v-model="user_data.phone" label="핸드폰번호*" type="phone"
-				:rules="[rules.required, rules.phone]" />
-			<v-btn @click="signUp" :disabled="!isValid">회원가입</v-btn>
-		</v-responsive>
-	</v-form>
+
+	<form id="signUpForm">
+		<SignUpFormItem name="id" v-model="signup_data.id" :error_message="error_message.id"/>
+		<SignUpFormItem name="password" v-model="signup_data.password" :error_message="error_message.password"/>
+		<SignUpFormItem name="password" v-model="check_password" :error_message="error_message.check_password"/>
+		<SignUpFormItem name="name" v-model="signup_data.name" :error_message="error_message.name"/>
+		<SignUpFormItem name="email" v-model="signup_data.email" :error_message="error_message.email"/>
+		<SignUpFormItem name="phone" v-model="signup_data.phone" :error_message="error_message.phone"/>
+		<button @click="signUp" :disabled="true" class="w-500 h-50 f-20 background-silver pointer radius-20">회원가입</button>
+	</form>
 </template>
 <script setup>
-import {ref,getCurrentInstance,computed} from 'vue'
-const v = ref(55);
-const {proxy} = getCurrentInstance();
+import rules from '@/utils/rules'
+import SignUpFormItem from '@/components/signup/SignUpFormItem'
+import { ref, getCurrentInstance, computed,watch } from 'vue'
+const v = ref(108);
+const { proxy } = getCurrentInstance();
 
-const isValid = ref({form:false,password:false});
 const id_duplication = ref(true);
 
-const user_data = ref({ id: '', password: '', name: '', email: '', phone: '' });
-const second_password = ref('')
+const signup_data = ref({ id: '', password: '', name: '', email: '', phone: '' });
+const check_password = ref('');
 
+const error_message = ref({id:'',password:'',check_password:'',name:'',email:'',phone:''});
 
-const formElement = ref('');
-const idElement = ref('');
-const firstPasswordElement = ref('');
-const secondPasswordElement = ref('');
+const signUpForm = document.querySelector('signUpForm');
 
-const rules = {};
-rules.required = value => !!value || '필수입력 사항입니다.';
-rules.length = value => (value && value.length >= 5 && value.length < 12) || '5글자 이상, 12글자 미만이어야 합니다.';
-rules.email = value => /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(value) || '이메일 형식이 아닙니다.';
-rules.phone = value => /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/.test(value) || '핸드폰번호 형식이 아닙니다.';
-rules.passwordDouble = value => (value && user_data.value.password === second_password.value) || '비밀번호를 다시 확인해주세요.';
-rules.idDuplicate = value => (value && id_duplication.value === false) || '중복되는 아이디가 존재합니다.';
 
 const signUp = () => {
-	proxy.$store.dispatch('signUp', user_data.value).then(res => {
+	proxy.$store.dispatch('signUp', signup_data.value).then(res => {
 		if (res.data.error === '') {
-			localStorage.setItem('id', user_data.value.id);
+			localStorage.setItem('id', res.data.data.id);
 
-			openDialogAlert({content : localStorage.getItem('id') + "님 회원가입 성공",dialog_type : "",callback_type:"signupSuccess"});
-		}else{
-			openDialogAlert({content : "회원가입 실패",dialog_type : "",callback_type:"signupFailed"});		
-			formElement.value.reset();		
+			openDialogAlert({ content: localStorage.getItem('id') + "님 회원가입 성공", dialog_type: "", callback_type: "signupSuccess" });
+		} else {
+			openDialogAlert({ content: "회원가입 실패", dialog_type: "", callback_type: "signupFailed" });
+			//formElement.value.reset();
 		}
 	});
 
 };
 
-
-const validPassword = () => {
-	var flag = false;
-	flag = user_data.value.password === second_password.value ? true : false;
-	isValid.value.password = flag;
-	if (isValid.value.password) {
-		firstPasswordElement.value.validate();
-		secondPasswordElement.value.validate();
-	}
-}
-
-const idCheck = (id) => {	
-	proxy.$store.dispatch('idCheck',{params:{id:id}}).then(res=>{
-		try{
-			if(res.data.error === ''){
-				if(res.data.data === 'ok'){
+const idCheck = (id) => {
+	proxy.$store.dispatch('idCheck', { params: { id: id } }).then(res => {
+		try {
+			if (res.data.error === '') {
+				if (res.data.data === 'ok') {
 					id_duplication.value = false;
-					
-				}else{
+
+				} else {
 					id_duplication.value = true;
 				}
-			}else{
+			} else {
 				id_duplication.value = true;
-			}			
-		}catch(error){
+			}
+		} catch (error) {
 			id_duplication.value = true;
 		}
-		idElement.value.validate();
 	});
-	
+
 };
 
-const dialog_alert_info = computed(()=>{
+const dialog_alert_info = computed(() => {
 	return proxy.$store.state.dialog_alert_info;
 });
 
-const dialog_alert = computed(()=>{
+const dialog_alert = computed(() => {
 	return proxy.$store.state.dialog_alert;
 });
 
-const openDialogAlert = (data) => {	
-	proxy.$store.dispatch('openDialogAlert',data);
+const openDialogAlert = (data) => {
+	proxy.$store.dispatch('openDialogAlert', data);
 };
 
 const close = () => {
 	const type = proxy.$store.state.dialog_alert_info.callback_type;
 	proxy.$store.dispatch('closeDialogAlert');
-	if(type === 'signupSuccess'){
+	if (type === 'signupSuccess') {
 		proxy.$router.push('/site/main');
 	}
 }
+
+watch(()=>signup_data.value.id,(value)=>{
+	error_message.value.id = rules('id',value);
+})
+
+watch(()=>signup_data.value.password,(value)=>{
+	error_message.value.password = rules('password',{first:value,second:check_password.value});
+	if(error_message.value.password === '' && check_password.value !== '') 
+		error_message.value.check_password = error_message.value.password;
+})
+
+watch(()=>check_password.value,(value)=>{
+	error_message.value.check_password = rules('password',{first:value,second:signup_data.value.password});
+	error_message.value.password = error_message.value.check_password;
+})
+
+watch(()=>signup_data.value.name,(value)=>{
+	error_message.value.name = rules('name',value);
+})
+
+watch(()=>signup_data.value.email,(value)=>{
+	error_message.value.email = rules('email',value);
+})
+
+watch(()=>signup_data.value.phone,(value)=>{
+	error_message.value.phone = rules('phone',value);
+})
+
+watch([error_message.value],()=>{
+	if(error_message.value.id === '' && error_message.value.password === '' && error_message.value.check_password === ''
+		&& error_message.value.name === '' && error_message.value.email === '' && error_message.value.phone === ''
+	) {
+		if(signup_data.value.id !== '' && signup_data.value.password !== '' && signup_data.value.name !== ''
+		&& signup_data.value.email !== '' && signup_data.value.phone !== ''){
+			console.log('test');
+		}
+	}
+})
 
 </script>
 <style></style>

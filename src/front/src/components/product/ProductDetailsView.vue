@@ -10,11 +10,11 @@
 				<div class="product_choice">
 					<div class="product_choice_wrap">
 						<p>수량</p>
-						<div class="product_choice_option">
+						<div class="product_choice_option flex align-items-center space-between">
 							<div class="product_choice_option_count">
-								<input type='button' @click='plus' value='+'/>
+								<input type='button' @click='plus' value='+' class="inline-flex center"/>
 								<input type='number' v-model='payment_info.count'>
-								<input type='button' @click='minus' value='-'/>
+								<input type='button' @click='minus' value='-' class="inline-flex center"/>
 							</div>
 							<span class="right">{{getFormat(payment_info.total_price,'price')}}</span>
 						</div>						
@@ -162,9 +162,6 @@ const getFormat = (data,type) => {
 }
 
 #product_details>#product_details_wrap>.product_details-content-payment>.product_choice>.product_choice_wrap>.product_choice_option{
-	display:flex;
-	justify-content: space-between;
-	align-items: center;
 	margin-top: 20px;
 	height:20px;
 	
@@ -202,8 +199,6 @@ input[type="number"]::-webkit-inner-spin-button {
 input[type="button"] {
 	width:20px;
 	height:20px;
-	display:inline-flex;
-	justify-content: center;
 	background-color: silver;
 }
 

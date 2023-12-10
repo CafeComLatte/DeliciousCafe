@@ -1,15 +1,16 @@
 <template>
-	<hgroup>
+	<hgroup class="flex space-between align-items-center">
 		<h1 class="f-40">{{info.name}}</h1>
-		<div>
+		<div class="inline-flex align-items-center">
 			<span>더보기</span>
 			<button @click="seeMore"><img :src="getImg('see_more.png')" /></button>
 		</div>
 	</hgroup>
 </template>
 <script setup>
-import {defineProps,computed,getCurrentInstance} from 'vue'
-const {proxy} = getCurrentInstance();
+import {ref,defineProps,computed,getCurrentInstance} from 'vue'
+
+const v = ref(4);
 
 const props = defineProps({
 	name : {
@@ -19,6 +20,10 @@ const props = defineProps({
 		type: Function
 	}
 });
+
+const {proxy} = getCurrentInstance();
+
+
 
 const seeMore = () => {
 	info.value.onSeeMore();
@@ -34,14 +39,7 @@ const getImg = (img) =>{
 </script>
 <style scoped>
 hgroup {
-	display: flex;
-	justify-content: space-between;
 	margin: 0 5px;
-}
-
-hgroup>div {
-	display: inline-flex;
-	align-items: center;
 }
 
 hgroup>div>span {

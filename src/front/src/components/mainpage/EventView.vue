@@ -9,7 +9,7 @@
 import EventHgroup from '@/components/mainpage/EventHgroup'
 import EventItem from '@/components/mainpage/EventItem'
 import {ref,computed,defineProps} from 'vue'
-const v = ref(27);
+const v = ref(28);
 
 const props = defineProps({
 	event_data : {
@@ -41,17 +41,6 @@ const seeMore = () => {
 	width : 1000px;
 	padding : 5px;
 	margin : 5px 0px 25px 0px;
-}
-
-#event_wrap > hgroup {
-	display : flex;
-	justify-content: space-between;
-	margin: 0 5px;
-}
-
-#event_wrap > hgroup > div {
-	display : inline-flex;
-	align-items: center;
 }
 
 #event_wrap > hgroup > div > span {

@@ -2,10 +2,8 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router/router'
 import store from '@/store/index.js'
-import "vuetify/styles";
-import { createVuetify } from "vuetify";
-import * as components from "vuetify/components"
-import * as directives from "vuetify/directives"
+import {createVuetify} from "vuetify";
+import {VDialog,VCard,VCardText,VCardActions,VForm,VResponsive,VTextField,VBtn} from "vuetify/components"
 
 import LoadingView from '@/components/utils/LoadingView'
 import NoDataView from '@/components/utils/NoDataView'
@@ -16,18 +14,16 @@ import {ref} from 'vue'
 
 const v = ref(8);
 
-const vuetify = createVuetify({
-  components,
-  directives,
-});
-
 const app = createApp(App)
 .component('LoadingView',LoadingView)
 .component('NoDataView',NoDataView)
 .component('AlertDialog',AlertDialog)
 .component('UserInfoChangeDialog',UserInfoChangeDialog)
 
-.use(vuetify)
+.use(createVuetify({
+	components:{VDialog,VCard,VCardText,VCardActions,VTextField,VBtn},
+	directives:{}
+}))
 .use(store)
 .use(router)
 

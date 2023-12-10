@@ -13,30 +13,30 @@ const routes = [
 		children : [
 			{
 				path : 'main',
-				component:()=> import('@/components/mainpage/MainPageView.vue')
+				component:()=> import(/* webpackChunkName: "main" */ '@/components/mainpage/MainPageView.vue')
 			},
 			{
 				path : 'user',
-				component:()=> import('@/components/user/UserView.vue')
+				component:()=> import(/* webpackChunkName: "user" */ '@/components/user/UserView.vue')
 			},
 			{
 				path : 'products',
-				component:()=> import('@/components/product/ProductListView.vue')
+				component:()=> import(/* webpackChunkName: "products" */ '@/components/product/ProductListView.vue')
 			},
 			{
 				path : 'payments',
-				component:()=> import('@/components/PaymentListView.vue'),
+				component:()=> import(/* webpackChunkName: "payments" */ '@/components/PaymentListView.vue'),
 				hash: '#payment_list'
 			},
 			{
 				path : 'products/:id',
-				component:()=> import('@/components/product/ProductDetailsView.vue'),
+				component:()=> import(/* webpackChunkName: "productsid" */ '@/components/product/ProductDetailsView.vue'),
 				props:true
 			}
 		]
 	},
-	{path: "/login", name : "LoginView", component:()=> import('@/components/login/LoginView.vue')},
-	{path: "/signUp", name : "SignUpView", component:()=> import('@/components/signup/SignUpView.vue')}
+	{path: "/login", name : "LoginView", component:()=> import(/* webpackChunkName: "login" */ '@/components/login/LoginView.vue')},
+	{path: "/signUp", name : "SignUpView", component:()=> import(/* webpackChunkName: "signup" */ '@/components/signup/SignUpView.vue')}
 ]
 
 const router = createRouter({
