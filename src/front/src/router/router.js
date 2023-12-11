@@ -25,7 +25,7 @@ const routes = [
 			},
 			{
 				path : 'payments',
-				component:()=> import(/* webpackChunkName: "payments" */ '@/components/PaymentListView.vue'),
+				component:()=> import(/* webpackChunkName: "payments" */ '@/components/payment/PaymentListView.vue'),
 				hash: '#payment_list'
 			},
 			{

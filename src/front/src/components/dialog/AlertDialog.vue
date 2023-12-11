@@ -16,7 +16,7 @@
 </template>
 <script setup>
 import { ref, defineProps, computed, onMounted,getCurrentInstance } from 'vue'
-const v = ref(37);
+const v = ref(38);
 
 const {proxy} = getCurrentInstance();
 
@@ -43,8 +43,7 @@ const info = computed(() => {
 	return props;
 });
 
-onMounted(async() => {
-	asyncGetEvent();
+onMounted(() => {
 	setTimeout(() => {
 		props.onClose();
 	}, 300);
@@ -54,16 +53,5 @@ const yes = () => {
 	console.log("yes");
 };
 
-async function asyncGetEvent() {
-	try {
-		await proxy.$store.dispatch('getEvent').then(response=>{
-			if(response.data.error === ''){
-				console.log('asyncGetEvent');
-			}	
-		});		
-	} catch (error) {
-		console.log("MainPageView asyncGetEvent error : " + error);
-	}
-}
 </script>
 <style scoped></style>

@@ -20,7 +20,7 @@
 </template>
 <script setup>
 import {ref,getCurrentInstance,defineProps,defineEmits,computed,watch} from 'vue'
-const v = ref(72);
+const v = ref(74);
 const { proxy } = getCurrentInstance();
 
 const props = defineProps({
@@ -68,7 +68,6 @@ watch(()=>model.value,(value)=>{
 })
 
 const check = () =>{
-	console.log('test');
 	if(model.value === ''){
 		error.value = true;
 		error_message.value = item_style.value.placeholder + ' 입력이 필요합니다.'; 

@@ -1,24 +1,24 @@
 <template>
 	<div id="nav" class="clearfix">
 		<div id="nav_wrap" :class="{navColor:navColor}">
-			<router-link id="logo" to="/site/main"><img id="logo_img" :src="getImg('cafe_logo.png')" /></router-link>
+			<router-link id="logo" to="/site/main" alt="메인페이지" title="메인페이지"><img id="logo_img" :src="getImg('cafe_logo.png')" /></router-link>
 			<ul>
-				<li><router-link to="/site/main">메인</router-link></li>
-				<li><router-link to="/site/user">사용자 정보</router-link></li>
-				<li><router-link to="/site/products">상품 검색</router-link></li>
-				<li><router-link to="/site/payments">결제 내역</router-link></li>
+				<li><router-link to="/site/main" alt="메인페이지" title="메인페이지">메인</router-link></li>
+				<li><router-link to="/site/user" alt="사용자 정보" title="사용자 정보">사용자 정보</router-link></li>
+				<li><router-link to="/site/products" alt="상품 검색" title="상품 검색">상품 검색</router-link></li>
+				<li><router-link to="/site/payments" alt="결제 내역" title="결제 내역">결제 내역</router-link></li>
 			</ul>
 			<div v-if="id === null" id="login" class="flex center">
 				<router-link to="/login" class="align-content-center">
-					<img id="login_img" v-bind:src="getImg('login.png')" />
+					<img id="login_img" v-bind:src="getImg('login.png')" alt="로그인 페이지" title="로그인 페이지" />
 				</router-link>
 			</div>
-			<div v-else id="login" class="flex center">
-				<router-link to="/site/user" class="align-content-center">
+			<div v-else id="login" class="flex center" alt="사용자 정보" title="사용자 정보">
+				<router-link to="/site/user" class="align-content-center flex center">
 					<img id="user_img" :src="getImg('person_uncheck.png')" />
 					<span>{{ id }}</span>
 				</router-link>
-				<router-link to="/login" @click="logout" class="align-content-center">
+				<router-link to="/login" @click="logout" class="align-content-center" alt="로그아웃" title="로그아웃">
 					<img id="login_img" :src="getImg('logout.png')" />
 				</router-link>
 			</div>
@@ -29,7 +29,7 @@
 <script setup>
 import { ref, getCurrentInstance,onMounted } from 'vue'
 
-const v = ref(38);
+const v = ref(43);
 
 const navColor = ref(false);
 

@@ -58,7 +58,6 @@ public class UsersController {
 		
 		if(isSuccess) {
 			httpSession.setAttribute("id", usersDTO.getId());
-			httpSession.setAttribute("password", usersDTO.getPassword());
 		
 			response = ErrorResponse.of(ErrorCode.OK, "");
 			

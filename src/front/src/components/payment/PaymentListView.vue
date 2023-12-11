@@ -11,7 +11,7 @@
 							<th class="inline-flex center align-items-center">수량</th>
 							<th class="inline-flex center align-items-center">총 금액</th>
 						</tr>
-						<tr v-for="(item, index) in itemList" :key="index" class="flex space-between">
+						<tr v-for="(item, index) in itemList" :key="index" class="flex space-between pointer">
 							<td>
 								<div class="product_content flex">
 									<img :src="getFormat(item.products[0].image,'image')"/>
@@ -46,7 +46,7 @@
 import PageView from '@/components/PageView'
 import { ref, onMounted, getCurrentInstance } from 'vue'
 
-const v = ref(28);
+const v = ref(30);
 
 const { proxy } = getCurrentInstance();
 const itemList = ref([]);

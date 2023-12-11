@@ -12,14 +12,16 @@
 					name="password"
 					:value="login_data.password"
 					@update:value="newValue => login_data.password = newValue"/>
-		<button @keyup.enter="submit" :disabled="disabled" type="submit" tabIndex="3" class="w-500 h-50 f-20 background-silver pointer radius-5">로그인</button>
+		<button @keyup.enter="submit" :disabled="disabled" type="submit" tabIndex="3" class="w-500 h-50 f-20 background-silver pointer radius-5">로그인</button>	
 	</form>
+	<router-link to="/signUp" class="left f-20 gray">회원가입</router-link>
+	<router-link to="#" class="right f-20 gray">아이디/비밀번호 찾기</router-link>
 </template>
 <script setup>
 import LoginFormItem from '@/components/login/LoginFormItem'
 import { ref, getCurrentInstance, computed} from 'vue'
 
-const v = ref(50);
+const v = ref(57);
 
 const { proxy } = getCurrentInstance();
 

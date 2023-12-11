@@ -1,7 +1,7 @@
 import axios from '@/axios/index.js'
 import {ref} from 'vue'
 
-const v = ref(3);
+const v = ref(4);
 
 const user = {
 	namespaced: true,
@@ -38,7 +38,9 @@ const user = {
 		},
 		
 		closeDialogAlert(state){
-			state.dialog_alert_info = null;
+			state.dialog_alert_info.content = '';
+			state.dialog_alert_info.dialog_type = '';
+			state.dialog_alert_info.callback_type = '';
 			state.dialog_alert = false;
 		}		
 	},
